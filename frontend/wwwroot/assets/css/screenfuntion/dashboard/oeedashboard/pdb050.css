@@ -1,0 +1,133 @@
+﻿
+/*#region UI Downtime*/
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ช่องห่างระหว่าง status */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 8px 12px;
+    background-color: #fff;
+    width: fit-content;
+}
+.status-label {
+    font-weight: 600;
+    font-size: var(--status-font-size);
+    margin-right: 10px;
+    color: #333;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: var(--status-font-size);
+    font-weight: 500;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.work {
+    background-color: #e6f9e9;
+    color: #007A00;
+}
+
+    .work .dot {
+        background-color: #007A00;
+    }
+
+.setup {
+    background-color: #e0f2ff;
+    color: #007aff;
+}
+
+    .setup .dot {
+        background-color: #007aff;
+    }
+
+.break {
+    background-color: #fff4d6;
+    color: #ff9900;
+}
+
+    .break .dot {
+        background-color: #ff9900;
+    }
+
+.downtime {
+    background-color: #ffe3e6;
+    color: #d60027;
+}
+
+    .downtime .dot {
+        background-color: #d60027;
+    }
+
+.tooltip-downtime {
+    color: black;
+}
+
+
+
+/*#region UI Downtime info*/
+.downtime-info-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    /*width: 200px;*/
+    padding: 10px;
+    text-align: center;
+}
+
+.downtime-info-section {
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.downtime-info-current-time {
+    background: radial-gradient(circle, #fffde7, #fffff0);
+}
+
+.downtime-info-work-time {
+    background: radial-gradient(circle, #4fd24f33, #4FD24F);
+}
+.downtime-info-down-time {
+    background: radial-gradient(circle, #ffe6e6, #ff6b6b);
+}
+
+.downtime-info-label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.downtime-info-time {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    margin-top: 5px;
+}
+
+.downtime-info-divider {
+    height: 1px;
+    background: #ccc;
+    margin: 2px 0;
+}
+
+/*#endregion */
+
+.card-title {
+    font-size:30px;
+    font-weight:500;
+}
+.card-actual {
+    min-height:660px;
+}

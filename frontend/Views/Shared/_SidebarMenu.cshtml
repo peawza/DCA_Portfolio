@@ -1,0 +1,206 @@
+﻿@using WEB.APP.MvcWebApp.Navigation
+@using static WEB.APP.ApplicationAuthorizeAttribute
+@inject ISiteMapProvider siteMapProvider
+@{
+    var userData = User.GetUserData();
+    var objectId = (string)ViewBag.ObjectId;
+}
+@functions
+{
+    bool HasPermission(SiteMapNode node, System.Security.Claims.ClaimsPrincipal p)
+    {
+        if (node.Attributes != null && node.Attributes.ContainsKey("child-screens"))
+        {
+            var childs = (node.Attributes["child-screens"] as string[]) ?? new string[] { };
+            var allow = false;
+            childs.ToList().ForEach(s => allow |= p.HasPermission(s));
+            return allow;
+        }
+        return p.HasPermission(node.ObjectId, PermissionNames.View.FunctionCode);
+    }
+
+    bool HasChildPermission(SiteMapNode parent, System.Security.Claims.ClaimsPrincipal p)
+    {
+        return parent.ChildNodes.Any(t => HasPermission(t, p));
+    }
+    bool HasScreenPermission(string objectId, System.Security.Claims.ClaimsPrincipal p)
+    {
+        var isAuthorized = User.HasPermission(objectId, 1);
+        return isAuthorized;
+    }
+
+    string GetIconClass(SiteMapNode node)
+    {
+        return "fas fa-" + (node.IconClass ?? "cube");
+    }
+}
+<style>
+    /* ค่าเริ่มต้น: sidebar ปิด → โชว์ logo_1 */
+    .sidebar-2 .logo-collapsed {
+        display: block;
+    }
+
+    .sidebar-2 .logo-expanded {
+        display: none;
+    }
+
+    /* ถ้า sidebar-2 มี class expanded → โชว์ logo_2 แทน */
+    .sidebar-2.expanded .logo-collapsed {
+        display: none;
+    }
+
+    .sidebar-2.expanded .logo-expanded {
+        display: block;
+    }
+</style>
+<nav class="sidebar-2">
+    <div class="sidebar-2-header">
+       
+        <img src="~/assets/images/logo_1.png" alt="Image" class="sidebar-2-image-mes logo-collapsed">
+        <img src="~/assets/images/logo_2.png" alt="Image" class="sidebar-2-image-mes logo-expanded">
+
+    </div>
+
+    <div style="display: flex; flex-direction: column;height: 87%;">
+
+        <ul class="sidebar2-ul sidebar-home">
+            <li>
+                <a href="/" class="sidebar2-selection"><i class="fas home-icon sidebar-2-icon icon-home"></i><span class="sidebar-2-nav-item">Home</span></a>
+            <li>
+        </ul>
+
+        <ul class="sidebar2-ul sidebar-menu">
+
+
+
+
+
+            @foreach (var siteMapNode in siteMapProvider.GetSiteMaps())
+            {
+                if (!siteMapNode.Attributes.ContainsKey("main-menu")) { continue; }
+                if (!HasPermission(siteMapNode, User)) { continue; }
+                <li>
+                    <a href="#" data-toggle="collapse" data-target="#@siteMapNode.ObjectId" aria-expanded="false" aria-controls="@siteMapNode.ObjectId" class="collapsible sidebar2-selection collapsible-main">
+                        <i class="fas @siteMapNode.IconClass sidebar-2-icon"></i> <span class="sidebar-2-nav-item">@siteMapNode.ModuleName</span>
+                    </a>
+                    <div id="@siteMapNode.ObjectId" class="collapse ui-submenu" aria-labelledby="headingOne">
+                        <div>
+                            <ul>
+                                <li class="accordion">
+
+
+                                    @foreach (var child in siteMapProvider.BuildGroupedChildren(siteMapNode.ChildNodes))
+                                    {
+                                        @* if (child.Attributes.ContainsKey("main-menu") == false) { continue; }  *@
+                                        @*  if (@child.SubModuleCode == "ProductionStart")
+
+                                            {
+                                            <span class="mes-master-icon"></span>
+
+                                            @child.SubModuleName_EN
+                                            }
+ *@
+
+                                        if (!string.IsNullOrWhiteSpace(child.SubModuleName))
+                                        {
+                                            if (!HasChildPermission(child, User)) { continue; }
+
+                                            <a href="#" data-toggle="collapse" data-target="#@child.ObjectId" aria-expanded="false" aria-controls="@child.ObjectId" class="collapsible">
+                                                <span class="mes-master-icon"></span>@child.SubModuleName
+                                            </a>
+                                            <div id="@child.ObjectId" class="collapse ui-submenu" aria-labelledby="headingone">
+                                                <div>
+                                                    <ul>
+                                                        @foreach (var sub in child.ChildNodes)
+                                                        {
+                                                            if (!sub.Attributes.ContainsKey("main-menu")) { continue; }                                                                
+                                                            if (!HasScreenPermission(sub.ObjectId, User)) { continue; }
+
+                                                            @if (sub.ObjectId != null && @sub.ObjectId == objectId)
+                                                            {
+
+                                                                <li>
+                                                                    <a class="sub-menu focus-sub-menu-nav" ria-expanded="false" title="@child.Title" asp-route="@sub.ObjectId">
+                                                                        <i class="fas fa-folder"></i> @sub.Title
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <a class="sub-menu s" ria-expanded="false" title="@child.Title" asp-route="@sub.ObjectId">
+                                                                        <i class="fas fa-folder"></i> @sub.Title
+                                                                    </a>
+                                                                </li>
+
+
+                                                            }
+
+                                                        }
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            if (!child.Attributes.ContainsKey("main-menu")) { continue; }
+                                            if (!HasPermission(child, User)) { continue; }
+                                            @if (child.ObjectId != null && @child.ObjectId == objectId)
+                                            {
+
+                                                <li>
+                                                    <a class="sub-menu focus-sub-menu-nav" ria-expanded="false" title="@child.Title" asp-route="@child.ObjectId">
+                                                        <i class="fas fa-folder"></i> @child.Title
+                                                    </a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+
+                                                <li>
+                                                    <a class="sub-menu" ria-expanded="false" title="@child.Title" asp-route="@child.ObjectId">
+                                                        <i class="fas fa-folder"></i> @child.Title
+                                                    </a>
+                                                </li>
+                                            }
+                                            
+                                            
+                                            }
+                                        }
+                                    
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            }
+
+
+
+          
+
+           
+
+
+
+
+
+
+
+        </ul>
+
+
+
+        <ul class="sidebar2-ul sidebar-logout">
+            <li>
+                <a href="@Url.Action("Logout", "Account",new { area = "" })" class="sidebar2-selection sidebar2-logout"><i class="fas fa-sign-out-alt sidebar-2-icon" style="left:0.1px;"></i><span class="sidebar-2-nav-item">Logout</span></a>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+</nav>

@@ -1,0 +1,456 @@
+﻿@using System.Globalization
+@using WEB.APP.Localization
+@inject IMessageLocalizer localizer
+@inject IMessageResources Resources
+@{
+    Layout = null;
+    string appName = @AppSharedData.ApplicationFullName;
+    var language = Context.Request.Query.ContainsKey("lang") ? Context.Request.Query["lang"].ToString() : "en";
+
+    if (@User.FindFirst("LanguageCode")?.Value == "th")
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("th-TH", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("th-TH", false);
+    }
+    else
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("en-EN", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("en-EN", false);
+    }
+}
+
+@await Html.PartialAsync("libs/_libs_css")
+@await Html.PartialAsync("libs/_libs_js")
+
+<script>
+    console.log("lang => @(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)");
+    var culture = kendo.culture("en-GB");
+    let CurrentCulture_now = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName"
+</script>
+
+<title>UACJ OTP Verification</title>
+<link rel="icon" type="image/x-icon" href="/assets/fav.svg">
+<link rel="stylesheet" href="~/assets/css/login.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/assets/css/style_icon.css" asp-append-version="true">
+
+<style>
+    body {
+        height: 100vh;
+    }
+
+    .k-invalid-msg {
+        font-size: 0.8rem;
+        color: red;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    input.k-invalid {
+        border-color: #dc3545;
+        background-color: #ffffff !important;
+    }
+
+    /* OTP UI */
+    .otp-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+    }
+
+    .otp-input {
+        width: 40px;
+        height: 48px;
+        text-align: center;
+        font-size: 1.25rem;
+        border-radius: 6px;
+    }
+
+    .otp-helper {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 0.5rem;
+    }
+
+    .otp-countdown {
+        font-weight: 600;
+        color: #003DA6; /* cobalt */
+    }
+
+    .otp-resend-btn {
+        background: transparent;
+        border: none;
+        padding: 0;
+        color: #007bff;
+        text-decoration: underline;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+        .otp-resend-btn[disabled] {
+            color: #999;
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+</style>
+
+<div class="left">
+    @* ใช้ bg จาก login.css เหมือนเดิม *@
+</div>
+
+<div class="login-box">
+    <div class="login-container">
+
+        <div class="brand-row">
+            <img src="/assets/images/Logo-login.png" alt="UACJ Logo" class="brand-logo">
+        </div>
+
+        <p>
+            OTP Verification<br />
+            Please enter the 6-digit code we sent to your contact.
+        </p>
+
+        <!-- ป้องกัน browser autofill แปลก ๆ -->
+        <input type="text" class="d-none" autocomplete="username" aria-hidden="true">
+        <input type="text" class="d-none" autocomplete="password" aria-hidden="true">
+        <input type="text" class="d-none" autocomplete="current-password" aria-hidden="true">
+        <input type="text" style="display:none">
+        <input type="password" style="display:none">
+
+        <!-- User Info -->
+        <h5 class="text-muted"><i class="fa fa-user"></i> User Profile</h5>
+        <div class="row">
+            <input type="hidden" id="token" name="token" />
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                <label class="form-label" for="ip-username">User Name <span class="text-danger">*</span></label>
+                <input type="text" class="k-textbox form-control" id="ip-username" name="ip-username" disabled />
+            </div>
+            
+
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                <label class="form-label">OTP sent to Email</label>
+                <input type="text" class="k-textbox form-control" id="ip-otp-destination" name="ip-otp-destination" disabled />
+            </div>
+        </div>
+
+        <!-- OTP Section -->
+        <h5 class="text-muted mt-4">
+            <i class="fa fa-shield-alt"></i> OTP Verification
+        </h5>
+
+        <div class="row" id="window-dialog-otp">
+            <div class="col-md-12 mb-2">
+                <label class="form-label">
+                    OTP Code <span class="text-danger">*</span>
+                </label>
+
+                <div class="otp-wrapper">
+                    <input type="text" maxlength="1" class="k-textbox form-control otp-input" data-otp-index="0" />
+                    <input type="text" maxlength="1" class="k-textbox form-control otp-input" data-otp-index="1" />
+                    <input type="text" maxlength="1" class="k-textbox form-control otp-input" data-otp-index="2" />
+                    <input type="text" maxlength="1" class="k-textbox form-control otp-input" data-otp-index="3" />
+                    <input type="text" maxlength="1" class="k-textbox form-control otp-input" data-otp-index="4" />
+                    <input type="text" maxlength="1" class="k-textbox form-control otp-input" data-otp-index="5" />
+                </div>
+
+                <span class="k-invalid-msg" data-for="otp-code"></span>
+                <div class="d-flex justify-content-between align-items-center otp-helper">
+                    <div>
+                        Reference No :
+                        <span id="otp-reference-no" class="otp-countdown" style="color:red"></span>
+                    </div>
+                    
+                </div>
+                <div class="d-flex justify-content-between align-items-center otp-helper">
+                    <div>
+                        Code will expire in
+                        <span id="otp-countdown" class="otp-countdown">05:00</span>
+                    </div>
+                    <div>
+                        <button type="button"
+                                id="btn-otp-resend"
+                                class="otp-resend-btn"
+                                onclick="Otp_onResend()"
+                                disabled>
+                            Resend OTP
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- hidden field ที่ validator จะ bind -->
+            <input type="hidden" id="otp-hidden" name="otp-code" />
+
+            <div class="d-flex justify-content-center gap-3 pt-3 w-100">
+                <!-- Confirm Button -->
+                <button type="button" id="windowsOtpConfirmButton"
+                        class="mes-button-save k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+                        onclick="Otp_onConfirm()">
+                    <span class="k-icon k-i-check k-button-icon"></span>
+                    <span class="k-button-text">
+                        Confirm OTP
+                    </span>
+                </button>
+
+                <!-- Cancel / Back to Login -->
+                <button type="button" id="windowsOtpCancelButton"
+                        class="mes-button-cancel k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+                        onclick="Otp_onCancel()">
+                    <span class="k-icon k-i-arrow-left k-button-icon"></span>
+                    <span class="k-button-text">
+                        Back To Login
+                    </span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var messageOtpDialog = new MessageDialog();
+    var otpCountdownInterval = null;
+    var otpExpireSeconds = 300; // 5 นาที
+
+    // Kendo Validator
+    let Otp_validator = $("#window-dialog-otp").kendoValidator({
+        errorTemplate: "<label class='k-invalid-msg'>#=message#</label>",
+        rules: {
+            otpComplete: function (input) {
+                if (input.is("[name='otp-code']")) {
+                    const otp = collectOtpValue();
+                    return otp.length === 6;
+                }
+                return true;
+            }
+        },
+        messages: {
+            required: "This field is required",
+            otpComplete: "Please enter 6 digits"
+        }
+    }).data("kendoValidator");
+
+    function collectOtpValue() {
+        const inputs = document.querySelectorAll(".otp-input");
+        let code = "";
+        inputs.forEach(ip => {
+            code += (ip.value || "").trim();
+        });
+        return code;
+    }
+
+    function initOtpInputs() {
+        const inputs = document.querySelectorAll(".otp-input");
+
+        inputs.forEach((input, idx) => {
+            input.value = "";
+            input.setAttribute("inputmode", "numeric");
+            input.setAttribute("pattern", "[0-9]*");
+
+            input.addEventListener("input", function (e) {
+                const val = e.target.value.replace(/\D/g, ""); // เอาเฉพาะเลข
+                e.target.value = val;
+
+                if (val && idx < inputs.length - 1) {
+                    inputs[idx + 1].focus();
+                    inputs[idx + 1].select();
+                }
+
+                document.getElementById("otp-hidden").value = collectOtpValue();
+            });
+
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Backspace" && !e.target.value && idx > 0) {
+                    inputs[idx - 1].focus();
+                    inputs[idx - 1].select();
+                }
+            });
+
+            input.addEventListener("paste", function (e) {
+                e.preventDefault();
+                const text = (e.clipboardData || window.clipboardData).getData("text");
+                const digits = text.replace(/\D/g, "").split("");
+                if (!digits.length) return;
+
+                inputs.forEach(ip => ip.value = "");
+                for (let i = 0; i < inputs.length && i < digits.length; i++) {
+                    inputs[i].value = digits[i];
+                }
+                document.getElementById("otp-hidden").value = collectOtpValue();
+                const lastFilled = Math.min(digits.length, inputs.length) - 1;
+                if (lastFilled >= 0) {
+                    inputs[lastFilled].focus();
+                    inputs[lastFilled].select();
+                }
+            });
+        });
+
+        if (inputs.length > 0) {
+            inputs[0].focus();
+        }
+    }
+
+    function startOtpCountdown(seconds) {
+        otpExpireSeconds = seconds;
+        const label = document.getElementById("otp-countdown");
+        const btnResend = document.getElementById("btn-otp-resend");
+
+        if (otpCountdownInterval) {
+            clearInterval(otpCountdownInterval);
+        }
+
+        btnResend.disabled = true;
+
+        function updateLabel() {
+            const m = Math.floor(otpExpireSeconds / 60);
+            const s = otpExpireSeconds % 60;
+            label.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+            if (otpExpireSeconds <= 0) {
+                clearInterval(otpCountdownInterval);
+                btnResend.disabled = false;
+            } else {
+                otpExpireSeconds--;
+            }
+        }
+
+        updateLabel();
+        otpCountdownInterval = setInterval(updateLabel, 1000);
+    }
+
+    function Otp_onCancel() {
+        var confirmationDialog = new ConfirmationDialog();
+        confirmationDialog.open({
+            yes: function () {
+                location.replace('/Account/SignIn');
+            }
+        }, Message("Confirmation", "ConfirmExitDialog"), "Confirmation");
+    }
+
+    async function Otp_onConfirm() {
+        if (!Otp_validator?.validate()) {
+            return;
+        }
+
+        const otpCode = collectOtpValue();
+        const username = document.getElementById("ip-username").value;
+        const token = document.getElementById("token").value;
+
+        const TextConfirmation = Message("Confirm", "Confirm_ConfirmOTP");
+        var confirmationDialog = new ConfirmationDialog("dialogOtpConfirm");
+        confirmationDialog.open({
+            yes: async ()=> {
+                try {
+                    let result = await APIPost("/verify/otp", {
+                        "UserName": username,
+                        "OtpCode": otpCode,
+                        "Token": token
+                    });
+
+                    ///console.log("Test ",result);
+                    
+                   
+                    if (result.staus == true) {
+                        location.replace('/');
+                    } 
+                    else {
+                        
+                        const msgCode = result?.MessageCode || "OTP_INVALID";
+                        // const msgCode = payload?.MessageCode || "OTP_INVALID";
+                        
+                        messageOtpDialog.warning(Message("Warning", msgCode), () => {
+                            const inputs = document.querySelectorAll(".otp-input");
+                            inputs.forEach(ip => ip.value = "");
+                            document.getElementById("otp-hidden").value = "";
+                            if (inputs.length > 0) {
+                                inputs[0].focus();
+                            }
+                             //console.log(msgCode ,"msgCode");
+                            if(msgCode == "OTP_USED_OR_EXPIRED"){
+                                location.replace('/Account/SignIn');
+
+                            }
+
+                        });
+                    }
+                } catch (err) {
+                    console.log("err =>",err);
+                    messageOtpDialog.error(Message("Warning", "NETWORK_OR_SERVER_ERROR"), () => {
+                        const inputs = document.querySelectorAll(".otp-input");
+                        if (inputs.length > 0) {
+                            inputs[0].focus();
+                        }
+                    });
+                }
+            }
+        }, TextConfirmation, "Confirmation");
+    }
+
+    async function Otp_onResend() {
+        const username = document.getElementById("ip-username").value;
+        const token = document.getElementById("token").value;
+
+        try {
+            const result = await APIPost(_url_callapi + "/api/auth/SSS010/resend-otp", {
+                "UserName": username,
+                "Token": token
+            });
+
+            // const payload = result?.data ?? result;
+            // const ok = (payload?.StatusCode === "200");
+
+            if (result.status == true) {
+                 document.getElementById('otp-reference-no').textContent  = result.RefNo;
+                messageOtpDialog.success(Message("Information", "OtpResent"), () => {
+                    initOtpInputs();
+                    document.getElementById("otp-hidden").value = "";
+                    startOtpCountdown(300);
+
+                   
+                });
+            } else {
+                const msgCode = payload?.MessageCode || "OTP_RESEND_FAILED";
+                messageOtpDialog.error(Message("Warning", msgCode));
+            }
+        } catch (err) {
+            messageOtpDialog.error(Message("Warning", "NETWORK_OR_SERVER_ERROR"));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const qs = new URLSearchParams(location.search);
+
+        const token        = qs.get('token')        || '';
+        const username     = qs.get('username')     || '';
+        const firstname    = qs.get('firstname')    || '';
+        const lastname     = qs.get('lastname')     || '';
+        const destination  = qs.get('destination')  || '';
+        const otp_reference_no  = qs.get('otp_reference_no')  || '';
+        
+
+        document.getElementById('token').value = token;
+
+        const ipUsername    = document.getElementById('ip-username');
+        const ipFirstname   = document.getElementById('ip-firstname');
+        const ipLastname    = document.getElementById('ip-lastname');
+        const ipDestination = document.getElementById('ip-otp-destination');
+       
+        //
+        if (ipUsername)    ipUsername.value    = username;
+        if (ipFirstname)   ipFirstname.value   = firstname;
+        if (ipLastname)    ipLastname.value    = lastname;
+        if (ipDestination) ipDestination.value = destination;
+
+         document.getElementById('otp-reference-no').textContent  = otp_reference_no;
+
+        // ถ้า token หรือ username ไม่มี ให้เด้งกลับ
+        // if (!token || !username) {
+        //     location.replace('/Account/SignIn');
+        //     return;
+        // }
+
+        // init otp
+        initOtpInputs();
+        startOtpCountdown(300);
+    });
+</script>

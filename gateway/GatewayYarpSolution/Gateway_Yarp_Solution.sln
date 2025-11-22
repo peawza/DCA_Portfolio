@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway_Yarp_Solution", "Gateway_Yarp_Solution.csproj", "{B312E111-1DF6-E459-0D63-D0ADD52C36E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "..\Libraries\Utils\Utils.csproj", "{1629B679-2D5F-1AAA-3B12-A945DDF55843}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B312E111-1DF6-E459-0D63-D0ADD52C36E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B312E111-1DF6-E459-0D63-D0ADD52C36E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B312E111-1DF6-E459-0D63-D0ADD52C36E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B312E111-1DF6-E459-0D63-D0ADD52C36E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1629B679-2D5F-1AAA-3B12-A945DDF55843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1629B679-2D5F-1AAA-3B12-A945DDF55843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1629B679-2D5F-1AAA-3B12-A945DDF55843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1629B679-2D5F-1AAA-3B12-A945DDF55843}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0DEBBB2-5049-41CC-8F4C-F7107AFA2CB2}
+	EndGlobalSection
+EndGlobal

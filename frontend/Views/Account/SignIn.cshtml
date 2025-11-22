@@ -1,0 +1,250 @@
+﻿@using WEB.APP.Localization
+@model LoginViewModel
+@inject IMessageLocalizer MessageLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    Layout = null;
+    string appName = @AppSharedData.ApplicationFullName;
+    var language = Context.Request.Query.ContainsKey("lang") ? Context.Request.Query["lang"].ToString() : "en";
+    var IdentityNameCookie = Configuration["Identity:IdentityNameCookie"];
+
+}
+
+<!DOCTYPE html>
+<html lang="@language">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UACJ Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/assets/fav.svg">
+    <link rel="stylesheet" href="~/assets/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/style_icon.css" asp-append-version="true">
+    <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/lib/kendo-ui/js/kendo.web.min.js"></script>
+    <script src="~/assets/lib/kendo-ui/js/kendo.aspnetmvc.min.js"></script>
+    <script src="~/assets/js/app.ui-state.js"></script>
+    <script src="~/assets/js/app.ui.js"></script>
+   
+</head>
+<style>
+    .login-box {
+      
+        margin-top: -10px !important;
+        height: 100vh;
+        margin-right: -5px !important;
+    }
+</style>
+<body>
+    <div class="left">
+        @* <img src="/assets/images/image-login.webp" alt="OEE Stats" class="image-login-oee" style="width: 80%; height:90%; border-radius: 38px;"> *@
+    </div>
+
+    <div class="login-box">
+        <div class="language-switcher " style="display:none">
+            <span>Language :</span>
+            <img src="/assets/images/en.png"
+                 alt="English"
+                 class="flag @(language == "en" ? "active" : "")"
+                 onclick="setLanguage('en')">
+
+            <img src="/assets/images/th.png"
+                 alt="Thai"
+                 class="flag @(language == "th" ? "active" : "")"
+                 onclick="setLanguage('th')">
+        </div>
+
+        <div class="login-container">
+            <div class="brand-row">
+                <img src="/assets/images/Logo-login.png" alt="UACJ Logo" class="brand-logo">
+                @* <h1 class="brand-title">UACJ</h1> *@
+            </div>
+
+            <p>Login to your Account<br>Welcome back! UACJ to login :</p>
+            <form id="sign-form" asp-area="" asp-controller="Account" asp-action="SignIn" method="post" role="form">
+                <div class="input-group">
+                    <i class="mes-user-square"></i>
+                  
+                    @(Html.Kendo().TextBoxFor(m => m.UserName)
+                        .HtmlAttributes(new
+                        {
+                            @Placeholder = Html.DisplayNameFor(m => m.UserName),
+                            @data_field = Html.DisplayNameFor(m => m.UserName),
+                            style = "width:100%",
+                           @*  required = "required",
+                            validationmessage = @MessageLocalizer["FieldRequired"]  *@
+                        })
+                        )
+                </div>
+         
+                <div class="input-group">
+                    <i class="mes-lock"></i>
+                    @(Html.Kendo().TextBoxFor(m => m.Password)
+                        .HtmlAttributes(new
+                        {
+                            @type = "password",
+                            @Placeholder = Html.DisplayNameFor(m => m.Password),
+                            @data_field = Html.DisplayNameFor(m => m.Password), 
+                            style = "width:100%",
+                            @* required = "required",
+                           validationmessage = @MessageLocalizer["FieldRequired"]  *@
+                        })
+                        )
+                    <i class="fa fa-eye toggle-password" onclick="togglePassword('Password', this)"></i>
+                </div>
+              
+
+                <div class="remember">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember login</label>
+                </div>
+                @if (!String.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="alert-error mt-2 mb-2">
+                        @MessageLocalizer[@ViewBag.Error]
+                    </div>
+                }
+         
+                <input type="hidden" id="hiddenLanguage" name="hiddenLanguage" value="@language">
+                  
+            
+
+                @Html.CommandButton("submitSignInButton", "LOGIN", new { @type = "submit", @class = "login-btn" }).Icon("sign-in")
+               
+            </form>
+            <div class="support">
+                If forget password please <a href="#">contact IT support</a>
+            </div>
+
+            
+        </div>
+    </div>
+    <div id="dummy" tabindex="-1" style="position:absolute; left:-9999px;"></div>
+</body>
+</html>
+
+<script>
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+
+        // สลับไอคอน eye กับ eye-slash (ถ้าใช้ FontAwesome)
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+    }
+    function setLanguage(lang) {
+        const currentUrl = new URL(window.location.href);
+        if (!currentUrl.searchParams.has('ReturnUrl')) {
+            currentUrl.searchParams.set('ReturnUrl', '/');
+        }
+        currentUrl.searchParams.set('lang', lang);
+
+       
+        window.location.href = currentUrl.toString();
+    }
+</script>
+<script>
+    function urlParams() {
+        try {
+            let queryString = window.location.search.replace("?ReturnUrl=", '');
+
+            if (queryString != "") {
+                return queryString;
+            } else {
+                return null;
+            }
+        }
+        catch {
+            return null;
+        }
+    }
+
+    $(document).ready(function () {
+        if ($("#returnUrl").val() == "") {
+            $("#returnUrl").val(urlParams())
+        }
+
+
+
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    var uiState = new AppUIState();
+    var validator;
+    function deleteCookie(name) {
+        document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;';
+    }
+
+    // ลบ cookie ที่ต้องการ
+    deleteCookie("uacj-tms-access-token");
+    // deleteCookie(IdentityNameCookie);
+    deleteCookie("uacj-tms-refresh-token");
+   
+    // เรียกเมื่อ DOM พร้อม หรือหลัง validation trigger แล้ว
+    
+    window.onload = function () {
+        const savedUsername = localStorage.getItem("uacj-saved-username");
+        if (savedUsername) {
+            document.getElementById("UserName").value = savedUsername;
+            document.getElementById("remember").checked = true;
+       
+
+        }
+
+       
+    }
+   
+    $(document).ready(function () {
+       // app.initPage();
+
+        uiState.register("signin", [{ elem: "#submitSignInButton", busyContent: "<i class=\"fas fa-spin fa-spinner\"></i> LOGIN" }, ".login-btn"]);
+        document.querySelectorAll('#Username, #Password').forEach(input => {
+            input.addEventListener('input', () => {
+                document.getElementById('login-error-message').style.display = 'none';
+            });
+        })
+        // Validation
+        $("form").kendoValidator({ validateOnBlur: false }).submit(function (e) {
+
+            const remember = document.getElementById("remember").checked;
+            const username = document.getElementById("UserName").value;
+
+            if (remember) {
+                localStorage.setItem("uacj-saved-username", username);
+            } else {
+                localStorage.removeItem("uacj-saved-username");
+            }
+
+         
+            uiState.busy("signin", true);
+        });
+
+        $("#@Html.IdFor(m => m.UserName)").on("keydown", function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13 || code == 9) {
+                e.preventDefault();
+                $("#@Html.IdFor(m => m.Password)").select();
+            }
+        });
+
+        $("#@Html.IdFor(m => m.Password)").on("keydown", function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                $("#signInButton").click();
+            }
+        });
+
+
+        setTimeout(function () {
+            $("#@Html.IdFor(m => m.UserName)").select();
+        }, 100);
+
+    });
+</script>

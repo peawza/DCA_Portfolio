@@ -1,0 +1,89 @@
+﻿@using Microsoft.Extensions.Hosting;
+@using Microsoft.AspNetCore.Hosting
+@using System.Globalization;
+@using WEB.APP.Localization
+
+@inject IOptionsMonitor<CookieAuthenticationOptions> cookieOptions
+@inject IWebHostEnvironment hostEnvironment;
+@inject IMessageLocalizer MessageLocalizer
+@{
+
+
+
+
+
+
+
+    if (@User.FindFirst("LanguageCode")?.Value == "th")
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("th-TH", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("th-TH", false);
+
+    }
+    else
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("en-EN", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("en-EN", false);
+
+
+    }
+
+
+
+    var uiCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.ToLowerInvariant();
+    var appName = "UACJ";
+    var isAuthenticated = User.Identity.IsAuthenticated;
+    var pageTitle = ViewBag.PageTitle ?? "";
+    var pageIcon = ViewBag.PageIcon ?? "cube";
+    var title = String.IsNullOrEmpty(pageTitle) ? string.Format("{0}", appName) : string.Format("{0} | {1} ", pageTitle, appName);
+
+}
+
+@{
+    var userData = User.GetUserData();
+}
+
+<script>
+    console.log("lang => @(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)");
+   // var culture = kendo.culture("en-GB");
+    let CurrentCulture_now = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName"
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="@appName" />
+    <meta content='maximum-scale=1.0, initial-scale=1.0, width=device-width' name='viewport'>
+    <title>@title</title>
+
+ 
+    @await Html.PartialAsync("libs/_operation_libs_css")
+    @await Html.PartialAsync("libs/_operation_libs_js")
+
+    @RenderBody()
+
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>
+<script>
+    const _user_create_by = "@User.FindFirst("UserName")?.Value";
+    const _user_update_by = "@User.FindFirst("UserName")?.Value";
+    const _token_timeout = "@User.FindFirst("Timeout")?.Value";
+    autoRefreshToken(_token_timeout);
+</script>
+

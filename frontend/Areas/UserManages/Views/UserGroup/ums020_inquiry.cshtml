@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc
+
+@{
+    var objectId = (string)ViewBag.ObjectId;
+    /*
+    var permissions = new
+        {
+        AllowView = User.HasPermission(objectId, PermissionNames.View.FunctionCode),
+        AllowNew = User.HasPermission(objectId, PermissionNames.New.FunctionCode),
+
+        AllowEdit = User.HasPermission(objectId, PermissionNames.Edit.FunctionCode),
+
+        AllowDelete = User.HasPermission(objectId, PermissionNames.Delete.FunctionCode),
+
+        AllowExport = User.HasPermission(objectId, PermissionNames.Export.FunctionCode),
+
+        AllowPrint = User.HasPermission(objectId, PermissionNames.Print.FunctionCode)
+
+    };
+    */
+
+    var permissions = new
+    {
+        AllowView = true,
+        AllowNew = true,
+        AllowEdit = true,
+        AllowDelete = true,
+        AllowExport = true,
+        AllowPrint = true
+    };
+
+}
+<script type="text/javascript">
+    const permissions = {
+        AllowView: common.Boolean("@permissions.AllowView"), AllowNew: common.Boolean("@permissions.AllowNew"), AllowEdit: common.Boolean("@permissions.AllowEdit"), AllowDelete: common.Boolean("@permissions.AllowDelete"), AllowExport: common.Boolean("@permissions.AllowNew"), AllowPrint: common.Boolean("@permissions.AllowPrint"),
+    }
+
+    var messageDialog = new MessageDialog();
+</script>
+<div id="search-container" class="card bg-light">
+    <div class="card-body m-2">
+        <div class="row g-3 d-flex justify-content-lg-between">
+
+            <!-- Left Column: Form Inputs -->
+            <div class="col-9">
+                <div class="row">
+                    <!-- Plant Code -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-usergroupname" class="form-label">
+                            @Resources["UMS020", "SC001"]
+                        </label>
+                        <input id="sc-usergroupname" name="sc-usergroupname" class="form-control" type="text" placeholder="@Resources["UMS020", "SC001"]" />
+                    </div>
+
+                    <!-- Plant Name -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-username" class="form-label">
+                            @Resources["UMS020", "SC002"]
+                        </label>
+                        <input type="text" class="d-none" autocomplete="username" aria-hidden="true">
+                        <input id="sc-username" name="sc-username" class="form-control" type="text" placeholder="@Resources["UMS020", "SC002"]" />
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-status" class="form-label">
+                            @Resources["UMS020", "SC003"]
+                        </label>
+                        <input id="sc-status" name="sc-status" class="form-control" type="text" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Search/Clear Buttons -->
+            <div class="col-lg-1 col-md-12 col-sm-12 relative-container">
+                <div class="position-bottom-right button-search">
+                    @Html.SearchButton().Events(ev => ev.Click("searchButtonClicked"))
+                    @Html.ClearButton().Events(ev => ev.Click("clearButtonClicked"))
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="message-container" class="alert alert-danger animated fadeIn mt-1" style="display:none"></div>
+
+<div id="grid-inquiry" class="mt-3"></div>
+
+@await Html.PartialAsync("ums021_dialog")
+@await Html.PartialAsync("ums022_dialog")
+
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums020/ums020_function.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums020/ums020_eventbutton.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums020/ums020_grid.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums020/ums021_function.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums020/ums022_function.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums020/ums022_grid.js" asp-append-version="true"></script>

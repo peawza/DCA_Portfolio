@@ -1,0 +1,79 @@
+﻿@inject IMessageLocalizer localizer
+
+<style>
+
+</style>
+<div id="usergroupmapping-window-dialog" style="align-items: center; ">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                @* <input type="hidden" id="status-mode" value="" /> *@
+                <input type="hidden" id="usgmapping_usergroup-id" value="" />
+                <div class="col-lg-2 col-md-3 col-sm-12 mt-2 mb-2">
+                    <label for="ip-usgmapping-usergroupname" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS022", "IP001"] <span class="text-color-red"></span>
+                    </label>
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-12 mt-2 mb-2">
+                    <input id="ip-usgmapping-usergroupname" name="ip-usgmapping-usergroupname" maxlength="50" disabled />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 mt-2 mb-2">
+                    <label for="ip-usgmapping-description" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS022", "IP002"] <span class="text-color-red"></span>
+                    </label>
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-12 mt-2 mb-2">
+                    <input id="ip-usgmapping-description" name="ip-usgmapping-description" maxlength="500" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-white my-2">
+        <div class="card-body">
+            <div class="row mt-2">
+                <h5 class="col-6 px-5"><i for="optional"></i>@Resources["UMS022", "IP003"]</h5>
+                <h5 class="col-6 px-5"><i for="selected"></i>@Resources["UMS022", "IP004"]</h5>
+            </div>
+
+            <div class="block-container mt-2">
+                <div class="d-flex justify-content-center px-4 ">
+                    <div id="optionalGrid"></div>
+                    <div class="container col-1 ">
+                        <div style="margin-top: 50px;">
+                            <div class="row justify-content-center my-2">
+                                @* @(Html.Kendo().Button()
+                                    .Name("transferButtonLR")
+                                    .ThemeColor(ThemeColor.Primary)
+                                    .Icon("caret-alt-right")) *@
+                                <button id="transferButtonLR"></button>
+                            </div>
+                            <div class="row justify-content-center my-2">
+                                @* @(Html.Kendo().Button()
+                                    .Name("transferButtonRL")
+                                    .ThemeColor(ThemeColor.Primary)
+                                    .Icon("caret-alt-left")) *@
+                                <button id="transferButtonRL"></button>
+                            </div>
+                            <div class="row justify-content-center my-2">
+                                @* @(Html.Kendo().Button()
+                                    .Name("transferButtonLRAll")
+                                    .ThemeColor(ThemeColor.Primary)
+                                    .Icon("caret-double-alt-right"))  *@
+                                <button id="transferButtonLRAll"></button>
+                            </div>
+                            <div class="row justify-content-center my-2">
+                                @* @(Html.Kendo().Button()
+                                    .Name("transferButtonRLAll")
+                                    .ThemeColor(ThemeColor.Primary)
+                                    .Icon("caret-double-alt-left")) *@
+                                <button id="transferButtonRLAll"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="selectedGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

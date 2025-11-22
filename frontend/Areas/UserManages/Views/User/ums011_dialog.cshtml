@@ -1,0 +1,76 @@
+﻿@inject IMessageLocalizer localizer
+
+<style>
+    /* #user-window-dialog {
+        min-height: 600px;
+        max-height: 600px;
+    } */
+
+</style>
+
+<div id="user-window-dialog" style="align-items: center; ">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <input type="hidden" id="status-mode" value="" />
+                <input type="hidden" id="user-id" value="" />
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-username" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP001"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-username" name="ip-username" required validationMessage="@localizer["FieldRequired", @Resources["UMS011", "IP001"]]" maxlength="50" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-firstname" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP002"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-firstname" name="ip-firstname" required validationMessage="@localizer["FieldRequired", @Resources["UMS011", "IP002"]]" maxlength="50" />
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-lastname" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP003"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-lastname" name="ip-lastname" required validationMessage="@localizer["FieldRequired", @Resources["UMS011", "IP003"]]" maxlength="50" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-department" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP004"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-department" name="ip-department" required validationMessage="@localizer["FieldRequired", @Resources["UMS011", "IP004"]]"/>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-position" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP005"] <span class="text-color-red"></span>
+                    </label>
+                    <input id="ip-position" name="ip-position" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-email" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP006"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-email" name="ip-email" required validationMessage="@localizer["FieldRequired", @Resources["UMS011", "IP006"]]" />
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-phonenumber" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP007"] <span class="text-color-red"></span>
+                    </label>
+                    <input id="ip-phonenumber" name="ip-position" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-status" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS011", "IP008"] <span class="text-color-red"></span>
+                    </label>
+                    <input id="ip-status" name="ip-status" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

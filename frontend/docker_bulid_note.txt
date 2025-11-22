@@ -1,0 +1,15 @@
+docker build -f Dockerfile -t mes-frontend:latest .
+
+## build Deploy AWS
+docker build -f Dockerfile -t 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com/mes/frontend:0.0.9 --no-cache .
+
+## push Docker to AWS
+docker push 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com/mes/frontend:0.0.9
+
+
+
+
+
+
+## เวลาติด login
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com

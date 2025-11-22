@@ -1,0 +1,33 @@
+﻿@using WEB.APP.Localization
+@inject IMessageResources Resources
+@inject IMessageLocalizer localizer
+<div id="ui-end-production-entry" style="align-items: center; ">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                <label for="ip-ui-end-production-entry-work-order" class="col-form-label text-left text-md-start w-100">
+                    @Resources["POS400", "IP001"]
+                </label>
+                <input id="ip-ui-end-production-entry-work-order" name="ip-ui-end-production-entry-work-order" required validationMessage="@localizer["FieldRequired",@Resources["POS400", "IP001"]]" maxlength="255" />
+                
+
+                <label for="ip-ui-end-production-entry-status" class="col-form-label text-left text-md-start w-100">
+                    @Resources["POS400", "IP002"] 
+                </label>
+                <input id="ip-ui-end-production-entry-status" name="ip-ui-end-production-entry-status" required validationMessage="@localizer["FieldRequired",@Resources["POS400", "IP002"]]" />
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript" src="~/assets/js/screenShared/ui_end_production_entry/ui_end_production_entry_funtion.js" asp-append-version="true"></script>

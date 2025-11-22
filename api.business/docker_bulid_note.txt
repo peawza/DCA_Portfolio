@@ -1,0 +1,1 @@
+docker build -f Dockerfile.Dashboard -t machine-dashboard-api:latest --no-cache .

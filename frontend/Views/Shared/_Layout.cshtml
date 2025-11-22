@@ -1,0 +1,174 @@
+﻿@using Microsoft.Extensions.Hosting;
+@using Microsoft.AspNetCore.Hosting
+@using System.Globalization;
+@using WEB.APP.Localization
+
+@inject IOptionsMonitor<CookieAuthenticationOptions> cookieOptions
+@inject IWebHostEnvironment hostEnvironment;
+@inject IMessageLocalizer MessageLocalizer
+@{
+
+
+
+
+
+
+
+    if (@User.FindFirst("LanguageCode")?.Value == "th")
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("th-TH", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("th-TH", false);
+
+    }
+    else
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("en-EN", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("en-EN", false);
+        
+    
+    }
+
+
+
+    var uiCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.ToLowerInvariant();
+    var appName = "UACJ";
+    var isAuthenticated = User.Identity.IsAuthenticated;
+    var ModuleName = ViewBag.ModuleName ?? "";
+    var BreadcrumbNavigation = ViewBag.BreadcrumbNavigation ?? "";
+    var pageTitle = ViewBag.PageTitle ?? "";
+    var pageIcon = ViewBag.PageIcon ?? "cube";
+    var title = String.IsNullOrEmpty(pageTitle) ? string.Format("{0}", appName) : string.Format("{0} | {1} ", pageTitle, appName);
+
+}
+
+@{
+    var userData = User.GetUserData();
+}
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentCulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="@appName" />
+    <meta name="environment" content="@hostEnvironment.EnvironmentName" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
+    <title>@title</title>
+
+
+    @await Html.PartialAsync("libs/_libs_css")
+    @await Html.PartialAsync("libs/_libs_js")
+
+    <link rel="stylesheet" href="~/assets/css/site_bar.css" asp-append-version="true" />
+   
+
+    @RenderSection("Styles", required: false)
+</head>
+<script>  
+    var culture = kendo.culture("en-GB");
+    let CurrentCulture_now = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName"
+</script>
+<body id="site-section">
+    <div class="custom-overlay"></div>
+    <main>
+
+
+        @await Html.PartialAsync("_SidebarMenu")
+        <div class="site-section" style="margin-left:86px">
+            <nav class="navbar2">
+
+                <div class="col-5 ml-5 navbar-nav mr-auto">
+                    <div class="nav-root" id="nav-root-pathpage">@ModuleName</div>
+                    <div class="nav-pathpage">
+                        <span class="" id="nav-pathpage">@BreadcrumbNavigation</span>
+                        <span class="nav-pathpage-pagename" id=""> @pageTitle  </span>
+                    </div>
+                </div>
+             
+
+                
+                <div class="language-switcher">
+                        <img src="/assets/images/en.png"
+                             alt="English"
+                             class="flag @(@User.FindFirst("LanguageCode")?.Value == "en" ? "active" : "")"
+                             onclick="navbar_setLanguage('en')">
+
+                        <img src="/assets/images/th.png"
+                             alt="Thai"
+                             class="flag @(@User.FindFirst("LanguageCode")?.Value == "th" ? "active" : "")"
+                             onclick="navbar_setLanguage('th')">
+                </div>
+
+               
+
+                <div class="p-1 pr-4">
+                   
+
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <img src="/assets/images/avatar.png" >
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">@User.FindFirst("DisplayName")?.Value</div>
+                            <div class="user-datetime">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span id="user-info-datetime-span"></span>
+                            </div>
+                        </div>
+                        <div class="dropdown-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="navdropdown-menu">
+                           @*  <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <span>Manage Account</span>
+                            </a> *@
+                            <a href="#" onclick="ChangePassword_Show(); return false;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <span>Change Password</span>
+                            </a>
+                            <a href="@Url.Action("Logout", "Account",new { area = "" })">
+                                <i class="far logout"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="page-content container-fluid d-hidden" id="page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+
+    <div id="notifications" style="display:none"></div>
+    <div id="ajax-notifications" ></div>
+    <div id="axios-loading"></div>
+    <div id="loadingOverlay" ></div>
+   
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+<script type="text/javascript" src="~/assets/js/app-loading.js" asp-append-version="true"></script>
+<script>
+    const _user_create_by = "@User.FindFirst("UserName")?.Value";
+    const _user_update_by = "@User.FindFirst("UserName")?.Value";
+    const _token_timeout = "@User.FindFirst("Timeout")?.Value";
+    autoRefreshToken(_token_timeout);
+</script>
+
+@await Html.PartialAsync("screenShared/_changePassword")

@@ -1,0 +1,35 @@
+# ใช้ .NET SDK 8.0 สำหรับ build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+WORKDIR /src
+
+# คัดลอกไฟล์ NuGet.Config เพื่อกำหนดแหล่งที่มาของแพ็กเกจ
+COPY NuGet.Config ./
+
+# คัดลอกไฟล์ .csproj และ restore dependencies โดยใช้ NuGet.Config
+COPY WEB.APP.csproj ./
+RUN dotnet restore "./WEB.APP.csproj" --configfile NuGet.Config
+
+# คัดลอกไฟล์ทั้งหมดและทำการ build
+COPY . ./
+WORKDIR "/src/WEB.APP"
+
+# Build และ Publish แอปพลิเคชัน
+RUN dotnet build "./WEB.APP.csproj" -c Release -o /app/build
+RUN dotnet publish "./WEB.APP.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# ใช้ Runtime Image ที่เล็กกว่า
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+# คัดลอกไฟล์ที่ Publish จากขั้นตอนก่อนหน้า
+COPY --from=build /app/publish .
+
+# ระบุ Environment Variable ถ้าจำเป็น
+# ENV ASPNETCORE_URLS=http://+:8080
+
+# ตั้งค่า EntryPoint
+ENTRYPOINT ["dotnet", "WEB.APP.dll"]

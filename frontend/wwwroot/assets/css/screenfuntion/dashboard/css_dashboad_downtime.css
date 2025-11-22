@@ -1,0 +1,77 @@
+﻿
+
+.downtime-machine-container {
+    margin-top: -1rem;
+    display: block;
+    position: relative;
+    margin-bottom: 1rem;
+    
+}
+.display-time-dowtime {
+    position: absolute;
+    top: 80%;
+}
+.row-group-downtime {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    /*margin-right: 15px;*/
+    margin-left: 15px;
+}
+
+.downtime-time {
+    transform: rotate(-90deg);
+    margin: 0px -2px 0px 0px;
+}
+
+.downtime-time-00-up {
+    transform: rotate(-90deg);
+    margin: 0px -3px 0px 2px;
+}
+
+.downtime-time-20-up {
+    transform: rotate(-90deg);
+    margin: 0px -2px 0px 0.5px;
+}
+
+
+
+.radius-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: -5px
+}
+.color-dowtime-setup {
+    background: #0070c0;
+}
+
+.color-dowtime-pause {
+    background: #FF8F00;
+}
+
+
+.color-dowtime-break {
+    /*background: #f4b183;*/
+    background: #ff0000;
+}
+
+.color-dowtime-stop {
+    background: #ff0000;
+}
+
+.color-dowtime-start {
+    background: #00b050;
+}
+
+.dowtime-worktime-ui {
+    margin-top: -20px;
+}
+
+.downtime-chart-ui {
+    cursor: pointer;
+}

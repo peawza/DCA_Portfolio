@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc
+
+@{
+    var objectId = (string)ViewBag.ObjectId;
+    /*
+    var permissions = new
+        {
+        AllowView = User.HasPermission(objectId, PermissionNames.View.FunctionCode),
+        AllowNew = User.HasPermission(objectId, PermissionNames.New.FunctionCode),
+
+        AllowEdit = User.HasPermission(objectId, PermissionNames.Edit.FunctionCode),
+
+        AllowDelete = User.HasPermission(objectId, PermissionNames.Delete.FunctionCode),
+
+        AllowExport = User.HasPermission(objectId, PermissionNames.Export.FunctionCode),
+
+        AllowPrint = User.HasPermission(objectId, PermissionNames.Print.FunctionCode)
+
+    };
+    */
+
+    var permissions = new
+    {
+        AllowView = true,
+        AllowNew = true,
+        AllowEdit = true,
+        AllowDelete = false,
+        AllowExport = true,
+        AllowPrint = true
+    };
+
+}
+<script type="text/javascript">
+    const permissions = {
+        AllowView: common.Boolean("@permissions.AllowView"), AllowNew: common.Boolean("@permissions.AllowNew"), AllowEdit: common.Boolean("@permissions.AllowEdit"), AllowDelete: common.Boolean("@permissions.AllowDelete"), AllowExport: common.Boolean("@permissions.AllowNew"), AllowPrint: common.Boolean("@permissions.AllowPrint"),
+    }
+
+    var messageDialog = new MessageDialog();
+</script>
+<div id="search-container" class="card bg-light">
+    <div class="card-body m-2">
+        <div class="row g-3 d-flex justify-content-lg-between">
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-username1" class="form-label">
+                            @Resources["UMS010", "SC001"]
+                        </label>
+                        <input type="text" class="d-none" autocomplete="username" aria-hidden="true">
+                        <input id="sc-username1" name="sc-username1" class="form-control" type="text" placeholder="@Resources["UMS010", "SC001"]" autocomplete="none" />
+                     
+                    
+                    
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-name" class="form-label">
+                            @Resources["UMS010", "SC002"]
+                        </label>
+                        <input id="sc-name" name="sc-name" class="form-control" type="text" pattern="[A-Za-z_-]+" placeholder="@Resources["UMS010", "SC002"]" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-status" class="form-label">
+                            @Resources["UMS010", "SC003"]
+                        </label>
+                        <input id="sc-status" class="form-control" type="text" />
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-permissiongroup" class="form-label">
+                            @Resources["UMS010", "SC004"]
+                        </label>
+                        <input id="sc-permissiongroup" name="sc-permissiongroup" class="form-control" type="text" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for="sc-department" class="form-label">
+                            @Resources["UMS010", "SC005"]
+                        </label>
+                        <input id="sc-department" name="sc-department" class="form-control" type="text" />
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-1 col-md-12 col-sm-12 relative-container">
+                <div class="position-bottom-right button-search">
+                    @Html.SearchButton().Events(ev => ev.Click("searchButtonClicked"))
+                    @Html.ClearButton().Events(ev => ev.Click("clearButtonClicked"))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="message-container" class="alert alert-danger animated fadeIn mt-1" style="display:none"></div>
+
+
+
+<div id="grid-inquiry" class="mt-3"></div>
+
+@await Html.PartialAsync("ums011_dialog")
+@await Html.PartialAsync("ums012_dialog")
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums010/ums010_function.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums010/ums010_eventbutton.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums010/ums010_grid.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums010/ums011_function.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/assets/js/screenfuntion/usermanagement/ums010/ums012_function.js" asp-append-version="true"></script>

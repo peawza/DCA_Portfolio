@@ -1,0 +1,258 @@
+﻿
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    overflow-y: hidden;
+    display: flex;
+    height: 98vh;
+    background-color: #f5f6fa;
+    background-image: url('/assets/images/bg-login.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; /* ให้เต็มหน้าจอ */
+}
+
+@media (max-width: 1200px) {
+    body {
+        background-image: none
+    }
+    .left {
+        display: none !important;
+    }
+}
+
+
+.login-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff52;
+    padding: 60px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+    .login-container h1 {
+        font-size: 3rem;
+        color: #333;
+        margin-left: 30px;
+        /* margin-bottom: 8px; */
+    }
+
+    .login-container p {
+        margin-bottom: 24px;
+        color: #666;
+    }
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    color: #BFDAFF;
+    border: 1px solid #BFDAFF;
+    border-radius: 32px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+    /* Custom checkbox */
+    .remember input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #BFDAFF;
+        border-radius: 5px;
+        background-color: #fff;
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+        position: relative;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        /* Checkmark */
+        .remember input[type="checkbox"]::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            background-color: #007bff;
+            border-radius: 2px;
+            transform: scale(0);
+            transition: transform 0.1s ease-in-out;
+        }
+
+        /* Show checkmark when checked */
+        .remember input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+.input-group .toggle-password {
+    /*position: absolute;*/
+    /*right: 16px;*/
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+    transition: 0.2s;
+    color: #BFDAFF !important;
+}
+
+    .input-group .toggle-password:hover {
+        color: #007bff;
+    }
+.input-group input {
+    border: none;
+    background: transparent;
+    outline: none;
+    flex: 1;
+    padding-left: 10px;
+    color: #106FF3 !important;
+}
+input::placeholder {
+    color: #106FF3 !important;
+    opacity: 0.5; /* Firefox */
+}
+
+input::-ms-input-placeholder { /* Edge 12 -18 */
+    color: #106FF3 !important;
+}
+.input-group i {
+    color: #999;
+}
+
+.remember {
+    margin-bottom: 20px;
+}
+
+.login-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #0065F2 0%, #BFDAFF 100%);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 21px;
+    font-weight: 600;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.support {
+    margin-top: 20px;
+    text-align: center;
+}
+
+    .support a {
+        color: #4a90e2;
+        text-decoration: none;
+    }
+
+.powered {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+    .powered img {
+        height: 32px;
+        margin: 0 10px;
+    }
+
+.language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    z-index: 999;
+}
+
+    .language-switcher span {
+        margin-right: 10px;
+        font-weight: 500;
+    }
+
+    .language-switcher .flag {
+        width: 32px;
+        height: 28px;
+        margin-left: 6px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        border-radius: 4px;
+        filter: grayscale(80%);
+        /*opacity: 0.5;*/
+    }
+
+        .language-switcher .flag:hover {
+            filter: none;
+            transform: scale(1.1);
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .language-switcher .flag.active {
+            filter: none;
+            border-color: #007bff;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+        }
+
+.brand-row {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */ */ gap: 12px; /* ระยะห่างระหว่างโลโก้กับชื่อ */
+    margin-bottom: 24px;
+}
+
+.alert-error {
+    margin-top: 14px;
+    margin-bottom: 14px;
+    color:red;
+    
+}
+
+/*.k-invalid-msg.field-validation-error {
+    display: none;
+}
+*/
+
+.image-login-oee {
+    width: 80%;
+    height: 80%;
+    border-radius:80px;
+    /*background-color: aqua;*/
+}
+.left {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    /*color: white;*/
+    position: relative;
+    /*background-color:aqua;*/
+}
+.input-group .lock {
+    color: #888;
+    font-size: 16px;
+    margin-right: 10px;
+}
+

@@ -1,0 +1,82 @@
+﻿
+/*#region UI Downtime*/
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* ช่องห่างระหว่าง status */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 8px 12px;
+    background-color: #fff;
+    width: fit-content;
+}
+
+.status-label {
+    font-weight: 600;
+    font-size: var(--status-font-size);
+    margin-right: 10px;
+    color: #333;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: var(--status-font-size);
+    font-weight: 500;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.work {
+    background-color: #e6f9e9;
+    color: #007A00;
+}
+
+    .work .dot {
+        background-color: #007A00;
+    }
+
+.setup {
+    background-color: #e0f2ff;
+    color: #007aff;
+}
+
+    .setup .dot {
+        background-color: #007aff;
+    }
+
+.break {
+    background-color: #fff4d6;
+    color: #ff9900;
+}
+
+    .break .dot {
+        background-color: #ff9900;
+    }
+
+.downtime {
+    background-color: #ffe3e6;
+    color: #d60027;
+}
+
+    .downtime .dot {
+        background-color: #d60027;
+    }
+
+.tooltip-downtime {
+    color: black;
+}
+
+/*#endregion */
+
+
+.apexcharts-series.apexcharts-heatmap-series {
+    margin-top:500px;
+}

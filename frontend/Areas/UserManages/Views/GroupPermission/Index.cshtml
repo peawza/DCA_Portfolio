@@ -1,0 +1,453 @@
+﻿
+@using Kendo.Mvc.UI
+@using WEB.APP.Localization
+@using static WEB.APP.ApplicationAuthorizeAttribute
+@using static WEB.APP.Areas.UserManages.Models.UMS030
+
+
+@model PermissionInquiryViewModel
+@{
+    var objectId = (string)ViewBag.ObjectId;
+    var values = new string[] { "View", "New", "Edit", "Delete", "Export", "Import", "Print" };
+    var defaultFuncitonCodes = Model.ScreenFunctions.Where(t => values.Any(k => k == t.Key)).Select(t => t.Value);
+    var permissions = new
+    {
+        AllowEdit = User.HasPermission("UMS020", PermissionNames.Edit.FunctionCode)
+    };
+    permissions = new
+    {
+        AllowEdit = true
+    };
+
+
+}
+
+@inject IMessageLocalizer localizer
+<div class="card bg-light">
+    <div class="card-body">
+        <div class="row form-group">
+            <label for="userGroup" class="col-form-label col-1">Group Name</label>
+            <div class="col-2">
+                <select id="userGroup" style="width:100%"></select>
+            </div>
+
+            <label for="name" class="col-form-label col-1">Name :</label>
+            <label class="col-2 form-control-plaintext" id="name"></label>
+
+            <label for="description" class="col-form-label col-2">Description  :</label>
+            <label class="col-4 form-control-plaintext" id="description"></label>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(async function () {
+      // let listrole = await APIPost(_url_callapi + "/api/auth/ums030/getrole", {})
+      // $("#userGroup").kendoDropDownList({
+      //   optionLabel: "-SELECT-",
+      //   dataTextField: "name",       // เปลี่ยนเป็นชื่อ field ที่ใช้แสดงชื่อ Role
+      //   dataValueField: "id",     // เปลี่ยนเป็น ID หรือ code ที่ต้องการ
+      //   dataSource: listrole,
+      //   change: function (e) {
+      //     const dataItem = this.dataItem();
+      //     $("#name").text(dataItem.Text);          // หรือ dataItem.Name แล้วแต่ข้อมูลที่ส่งมา
+      //     $("#description").text(dataItem.Description || ""); // ต้องให้ backend ส่ง Description มาด้วย
+      //   }
+      // });
+    });
+
+</script>
+
+<div id="group-permission-container" class="d-none" data-allow-edit="@(permissions.AllowEdit?"true":"false")">
+    <div class="d-flex mt-1 mb-1">
+        @if (permissions.AllowEdit)
+        {
+            <div class="flex-fill">
+                @Html.Label("GroupName", "Assign Permission by Module", new { @class = "col-form-label col-3" })
+               @*  @(Html.ModuleDropDownList("module")
+                    .OptionLabel("-SELECT -")
+                    .HtmlAttributes(new { @style = "width:200px" })) *@
+                <select id="module" style="width:200px;"></select>
+                <script>
+                    $(document).ready(async function () {
+                      // let listmodule = await APIPost(_url_callapi + "/api/auth/ums030/getmodules", {})
+                      // $("#module").kendoDropDownList({
+                      //   optionLabel: "-SELECT -",
+                      //   dataTextField: "ModuleName_EN",
+                      //   dataValueField: "ModuleCode",
+                      //   valuePrimitive: true,
+                      //   dataSource: listmodule
+                      // });
+                    });
+                </script>
+                @Html.Kendo().Button().Name("allowButton").Icon("check-outline").Content("Allow").HtmlAttributes(new { @class = "k-success", @style = "min-width:100px" }).Events(ev => ev.Click("allowButtonClicked"))
+                @Html.Kendo().Button().Name("denyButton").Icon("close-outline").Content("Deny").HtmlAttributes(new { @class = "k-danger", @style = "min-width:100px" }).Events(ev => ev.Click("denyButtonClicked"))
+            </div>
+           
+        }
+        <div class="flex-fill text-right">
+            @if (permissions.AllowEdit)
+            {
+                @Html.SaveButton("saveButton").HtmlAttributes(new { @class = "k-success", @style = "min-width:100px" }).Events(ev => ev.Click("saveButtonClicked"))
+            }
+            @Html.RefreshButton("refreshButton").HtmlAttributes(new { @class = "k-primary", @style = "min-width:100px" }).Events(ev => ev.Click("refreshButtonClicked"))
+        </div>
+    </div>
+    <div id="message-container" class="alert alert-danger animated fadeIn mt-1" style="display:none"></div>
+    @(Html.Kendo().Grid<GroupPermissionViewModel>()
+        .Name("grid")
+        .AutoBind(false)
+        .Columns(c =>
+        {
+            c.Bound(t => t.ScreenName).ClientTemplate("#=renderScreenName(data)#");
+            foreach (var p in Model.ScreenFunctions.Keys)
+            {
+                if(p == "Cancel Lost" || p =="Special"|| p =="Repair Completed"){
+                    continue;
+                }
+                c.Template("#=renderPermission(data,'" + p.Replace(" ","") +"',"+ Model.ScreenFunctions[p] + ")#")
+                    .Title(p).Width(100)
+                    .ClientHeaderTemplate(p+ (permissions.AllowEdit ? "<br/><input type='checkbox' id='checkbox-function-" + Model.ScreenFunctions[p] + "' class='k-checkbox k-checkbox-all' data-function-code='" + Model.ScreenFunctions[p] + "'>":""))
+                    .HtmlAttributes(new { @class = "text-center" })
+                    .HeaderHtmlAttributes(new { @class = "text-center" });
+            }
+        })
+        .Scrollable(s=>s.Height("auto"))
+        .DataSource(ds =>
+            ds.Ajax()
+            .Read(r => r.Action("Read", "GroupPermission").Type(HttpVerbs.Post))
+            .Model(m =>
+            {
+                m.Id(f => f.Id);
+            })
+        .Group(g => { g.Add(f => f.GroupName); g.Add(f => f.SubGroupName); })
+            .Events(ev => ev.RequestStart("dataSourceRequestStart").RequestEnd("dataSourceRequestEnd").Error("dataSourceError")))
+        .Events(ev => ev.DataBinding("gridDataBinding").DataBound("gridDataBound"))
+        .HtmlAttributes(new { })
+    )
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        var uiState = new AppUIState();
+        var grid, userGroupDropDownList, moduleDropDownList;
+        var messageDialog = new MessageDialog();
+        var id = '@Html.Raw(Json.Serialize(ViewBag.Id))';
+        id = id.replaceAll('"', '').trim()
+        $(document).ready(async function () {
+            app.initPage();
+            grid = $("#grid").data("kendoGrid");
+            let listrole = await APIPost(_url_callapi + "/api/auth/ums030/getrole", {})
+            $("#userGroup").kendoDropDownList({
+            optionLabel: "-SELECT-",
+            dataTextField: "name",       // เปลี่ยนเป็นชื่อ field ที่ใช้แสดงชื่อ Role
+            dataValueField: "id",     // เปลี่ยนเป็น ID หรือ code ที่ต้องการ
+            dataSource: listrole.data,
+            change: function (e) {
+                const dataItem = this.dataItem();
+                $("#name").text(dataItem.name);          // หรือ dataItem.Name แล้วแต่ข้อมูลที่ส่งมา
+                $("#description").text(dataItem.description || ""); // ต้องให้ backend ส่ง Description มาด้วย
+            }
+            });
+            let listmodule = await APIPost(_url_callapi + "/api/auth/ums030/getmodules", {})
+            $("#module").kendoDropDownList({
+            optionLabel: "-SELECT -",
+            dataTextField: "moduleNameEN",
+            dataValueField: "moduleCode",
+            valuePrimitive: true,
+            dataSource: listmodule.data
+            });
+            userGroupDropDownList = $("#userGroup").data("kendoDropDownList");
+            moduleDropDownList = $("#module").data("kendoDropDownList");
+
+            uiState.register("ajax", [".k-button"]);
+            // console.log("Test Data =>",userGroupDropDownList,$("#userGroup").data("kendoDropDownList"))
+            userGroupDropDownList.value(id);
+            $("#userGroup").kendoDropDownList({enable: false});
+            grid.dataSource.read({ userGroupId: id});
+            listrole.data.forEach(e=>{
+                if (id == e.id) {
+                    console.log(e.name,e.description)
+                    //$("#userGroup").data("kendoDropDownList").value();
+                    $("#name").html(e.name);
+                    $("#description").html(e.description);
+                }
+            })
+            // $.ajax({
+            //     url: "/group/permission/roles/list",
+            //     data: id,
+            //     success: function (data, status, xhr) {
+            //         console.log("data =>",data);
+                    
+            //         data.forEach(e=>{
+            //             if (id == e.Id) {
+            //                 //$("#userGroup").data("kendoDropDownList").value();
+            //                 $("#name").html(e.Name);
+            //                 $("#description").html(e.Description);
+            //             }
+            //         })
+                    
+                   
+            //     },
+            //     error: function (xhr, status, error) {
+            //         var message = app.ui.handleAjaxError(xhr, status, error);
+            //         showError(message);
+            //     },
+            //     complete: function(){
+            //         uiState.busy('ajax', false);
+            //     }
+            // })
+        });
+        function allowButtonClicked(e) {
+            var value = moduleDropDownList.value();
+            if (value) {
+                applyPermission(value, true);
+            }
+        }
+
+        function denyButtonClicked(e) {
+            var value = moduleDropDownList.value();
+            if (value) {
+                applyPermission(value, false);
+            }
+        }
+
+        function applyPermission(moduleCode, allow)
+        {
+            var functionCodes = @(Html.Raw(Json.Serialize(defaultFuncitonCodes)));
+            $.each(functionCodes, function (index, item) {
+                $(".f-checkbox[data-module-code='" + moduleCode + "'][data-function-code='" + item +"']").prop("checked", allow);
+            });
+        }
+
+        function saveButtonClicked(e) {
+            app.ui.confirmDialog({ content: "@localizer["ConfirmSave"]" }).result.done(() => {
+                var data = {
+                    userGroupId: userGroupDropDownList.value(),
+                    Permissions: getPermissionChanges()
+                };
+                uiState.busy('ajax', true);
+                $.post({
+                    url: "@Url.Action("Save")",
+                    data: data,
+                    success: function (data, status, xhr) {
+                        var message = app.ui.handleAjaxSuccess(data, status, xhr);
+                        grid.dataSource.read({ userGroupId: userGroupDropDownList.value() });
+                        showSuccess(message);
+                    },
+                    error: function (xhr, status, error) {
+                        var message = app.ui.handleAjaxError(xhr, status, error);
+                        showError(message);
+                    },
+                    complete: function(){
+                        uiState.busy('ajax', false);
+                    }
+                });
+            });
+        }
+
+        function getPermissionChanges() {
+            var data = [];
+            $(".f-checkbox:checked").each(function (index, item) {
+                data.push({
+                    screenId: $(item).data("screen-id"),
+                    functionCode: $(item).data("function-code")
+                });
+            });
+            return data;
+        }
+
+        function refreshButtonClicked(e) {
+            clearMessage();
+            grid.dataSource.read({ userGroupId: userGroupDropDownList.value() });
+        }
+
+        function userGroupChange(e) {
+            var dataItem = this.dataItem();
+            console.log(dataItem);
+            if (dataItem.Id) {
+                $("#name").html(dataItem.Name);
+                $("#description").html(dataItem.Description);
+                //grid.dataSource.read({ userGroupId: this.value() });
+            } else {
+                grid.dataSource.data([]);
+                $("#name").html('');
+                $("#description").html('');
+            }
+        }
+
+        function showError(message) {
+            messageDialog.error(message);
+            app.ui.showAlertError("#message-container", message);
+        }
+
+        function showSuccess(message) {
+            messageDialog.success(message);
+            app.ui.showAlertSuccess("#message-container", message);
+        }
+
+        function showWarning(message) {
+            messageDialog.warning(message);
+            app.ui.showAlertWarning("#message-container", message);
+        }
+
+        function clearMessage() {
+            app.ui.clearAlert("#message-container");
+        }
+
+        function dataSourceRequestStart(e) {
+            app.ui.handleGridRequestStart(grid, e, function () { uiState.busy("ajax", true); });
+        }
+
+        function dataSourceRequestEnd(e) {
+           uiState.busy("ajax", false);
+            var options = {
+                read: {
+                    dataNotFound: function (message) {
+                        showWarning("@localizer["DataNotFound"]");
+                    }
+                },
+                create: {
+                    complete: function(message){
+                        showSuccess(message);
+                    }
+                },
+                update: {
+                    complete: function (message) {
+                        showSuccess(message);
+                    }
+                },
+                destroy: {
+                    complete: function (message) {
+                        showSuccess(message);
+                    }
+                }
+            };
+            app.ui.handleDataSourceRequestEnd(e, options);
+            if (e.type == 'create' || e.type == 'update' || e.type == 'destroy') {
+                e.sender.read(getSearchCriteria());
+            }
+        }
+
+        function dataSourceError(e) {
+            app.ui.handleDataSourceError(e, {});
+        }
+
+        function gridDataBinding(e) {
+            app.ui.initGridRowNo(this);
+        }
+
+        function gridDataBound(e) {
+            var hasData = e.sender.dataSource.data().length > 0;
+            app.ui.uiEnable(["#saveButton"], hasData);
+            if (hasData) {
+                $("#group-permission-container").removeClass("d-none");
+            } else {
+                $("#group-permission-container").addClass("d-none");
+            }
+
+            $(".k-reset", ".k-grouping-row").each(function (index, item) {
+                var html = $(item).html();
+                var startIndex = html.indexOf("GroupName:");
+                var endIndex = html.lastIndexOf("_") + 1;
+                //console.log(html.substring(0, startIndex));
+                //console.log(html.substring(endIndex));
+                $(item).html(html.substring(0, startIndex) + html.substring(endIndex));
+            });
+            $(".k-checkbox-all").prop("checked", false);
+            $(".k-checkbox-all").bind("change", function () {
+                var isChecked = $(this).is(":checked");
+                var functionCode = $(this).data("function-code");
+
+                $(".f-checkbox[data-function-code='" + functionCode + "']").prop("checked", isChecked);
+            });
+
+            var preferedGridHeight = $(window).height() - $("#grid").position().top - 120;
+            app.ui.toggleVScrollable(grid, { height: preferedGridHeight});
+            
+            
+            grid.tbody.find("tr").each(function () {
+                var dataItem = grid.dataItem(this);
+                if (dataItem && dataItem.SubGroupName) {
+                    $(this).addClass("id-" + dataItem.SubGroupName);
+                }
+            });
+            $("tr[class$='_##']").each(function () {            
+                var $cells = $(this).find("td.k-group-cell");
+
+                if ($cells.length >= 2) {
+                    // ลบ cell ที่สองออก
+                    $cells.eq(1).remove();
+
+                    // รวม colspan ให้ cell แรก
+                    $cells.eq(0).attr("colspan", 2);
+                }
+            });
+            document.querySelectorAll("p.k-reset").forEach(p => {
+                    const textNodes = Array.from(p.childNodes).filter(n => n.nodeType === Node.TEXT_NODE);
+                    const plainText = textNodes.map(n => n.nodeValue).join("").trim();
+
+                    // ถ้า text == "Sub##" ให้ลบทั้งแถว <tr>
+                    if (plainText === "Sub##") {
+                      const tr = p.closest("tr.k-grouping-row") || p.closest("tr");
+                      if (tr) tr.remove();
+                      return; // จบงานสำหรับ p ตัวนี้
+                    }
+
+                    // ไม่ใช่ "Sub##" -> ตัด prefix "Sub" ออกเฉพาะที่ขึ้นต้น text node
+                    textNodes.forEach(node => {
+                      const raw = node.nodeValue;
+                      const trimmedStart = raw.trimStart();
+                      if (trimmedStart.startsWith("Sub") && !trimmedStart.startsWith("Sub##")) {
+                        // รักษา space นำหน้าไว้ แล้วลบคำว่า 'Sub'
+                        node.nodeValue = raw.replace(/^(\s*)Sub/, "$1");
+                      }
+                    });
+              
+
+            });
+
+              // const nodess = Array.from(p.childNodes);
+              //   console.log(nodess);
+        }
+
+        function renderScreenName(data) {
+            return data.ScreenName;
+        }
+
+        function renderPermission(data, name, functionCode) {
+            var allowEdit = $("#group-permission-container").data("allow-edit");
+            if (allowEdit == true) {
+                if ((data.ScreenFunctionCode & functionCode) > 0) {
+                    var id = kendo.format("{0}-{1}", data.ScreenId, functionCode);
+                    return data.Permissions[name] ?
+                        '<input type="checkbox" id="' + id + '" class="k-checkbox f-checkbox" data-module-code="' + data.ModuleCode + '" data-screen-id="' + data.ScreenId + '" data-function-code="' + functionCode + '" checked="checked">' :
+                        '<input type="checkbox" id="' + id + '" class="k-checkbox f-checkbox" data-module-code="' + data.ModuleCode + '" data-screen-id="' + data.ScreenId + '" data-function-code="' + functionCode + '">';
+                }
+                return '';
+            } else {
+                if ((data.ScreenFunctionCode & functionCode) > 0) {
+                    var id = kendo.format("{0}-{1}", data.ScreenId, functionCode);
+                    return data.Permissions[name] ?
+                        '<span class="text-primary"><i class="fas fa-circle"></i></span>' :
+                        '';
+                }
+                return '';
+            }
+        }
+
+        function renderHeader(functionCode) {
+            var id = kendo.format("all-checkbox-function-{1}", functionCode);
+            return '<input type="checkbox" id="' + id + '" class="k-checkbox k-checkbox-all" data-function-code="' + functionCode + '">';
+        }
+
+        function getUserGroupId() {
+            return {
+                userGroupId: userGroupDropDownList.value() // หรือ id ก็ได้
+            };
+        }
+
+    </script>
+}
+
+
+

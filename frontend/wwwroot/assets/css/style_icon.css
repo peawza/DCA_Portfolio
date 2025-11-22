@@ -1,0 +1,546 @@
+﻿.k-icon.k-i-calendar {
+    background-image: url('../../assets/icon/csi/calendar-2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.k-icon.k-i-calendar::before {
+    content: none !important;
+}
+
+
+.k-icon.k-i-edit {
+    background-image: url('../../assets/icon/csi/message-edit.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.k-icon.k-i-clear {
+    background-image: url('../../assets/icon/csi/message-edit.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.k-icon.k-i-clear {
+    background-image: url('../../assets/icon/csi/refresh-square-2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+#print-button, .print-button {
+    background-color: white !important;
+    color: #FD0000 !important;
+}
+    #print-button .k-icon.k-i-print, .print-button .k-icon.k-i-print {
+        background-image: url('../../assets/icon/csi/pdf-icon.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+        width: 20px; /* หรือขนาดที่เหมาะสม */
+        height: 20px;
+        color: transparent; /* ปิด font icon ดั้งเดิม */
+        font-size: 0; /* ถ้าจำเป็น */
+    }
+
+    .print-button.k-button.k-danger.k-state-disabled {
+        color: #868585;
+        background-color: #d9d9da;
+        border-color: #c5c5c5;
+    }
+
+#re-print-button {
+    background-color: white;
+    color: #FD0000;
+}
+
+    #re-print-button .k-icon.k-i-print {
+        background-image: url('../../assets/icon/csi/pdf-icon.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+        width: 20px; /* หรือขนาดที่เหมาะสม */
+        height: 20px;
+        color: transparent; /* ปิด font icon ดั้งเดิม */
+        font-size: 0; /* ถ้าจำเป็น */
+    }
+
+#export-button {
+    background-color: white;
+    color: #059669;
+}
+
+    #export-button .k-icon.k-i-download {
+        background-image: url('../../assets/icon/csi/excel-icon.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+        width: 20px; /* หรือขนาดที่เหมาะสม */
+        height: 20px;
+        color: transparent; /* ปิด font icon ดั้งเดิม */
+        font-size: 0; /* ถ้าจำเป็น */
+    }
+
+#gen-file-button {
+    background-color: white;
+    color: #059669;
+}
+
+    #gen-file-button .k-icon.k-i-download {
+        background-image: url('../../assets/icon/csi/excel-icon.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: inline-block;
+        width: 20px; /* หรือขนาดที่เหมาะสม */
+        height: 20px;
+        color: transparent; /* ปิด font icon ดั้งเดิม */
+        font-size: 0; /* ถ้าจำเป็น */
+    }
+
+#import-button {
+    background-color: #3CC4FF;
+    border-color: #3CC4FF;
+    color: white;
+}
+#import-button .k-icon.k-i-download {
+    background-image: url('../../assets/icon/csi/import.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+#download-sample-file-button {
+    background-color: #3CC4FF;
+    border-color: #3CC4FF;
+    color: white;
+}
+#download-sample-file-button .k-icon.k-i-download {
+    background-image: url('../../assets/icon/csi/import.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+#upload-button .k-icon.k-i-upload {
+    background-image: url('../../assets/icon/csi/upload-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.k-icon.k-i-trash {
+    background-image: url('../../assets/icon/csi/trush-square.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+
+.k-icon.timer-pause {
+    background-image: url('../../assets/icon/csi/timer-pause.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+
+.lock {
+    background-image: url('../../assets/icon/csi/lock.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+.user-square {
+    background-image: url('../../assets/icon/csi/user-square.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.browse-file {
+    background-image: url('../../assets/icon/csi/gallery-import.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.clear-file {
+    background-image: url('../../assets/icon/csi/refresh-square-2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+
+.quality-icon {
+    background-image: url('../../assets/icon/csi/quality-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น*/
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+.production-icon {
+    background-image: url('../../assets/icon/csi/production-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+.maintenance-icon {
+    background-image: url('../../assets/icon/csi/maintenance-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+.inventory-icon {
+    background-image: url('../../assets/icon/csi/menu-inventory-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+.users-icon {
+    background-image: url('../../assets/icon/csi/users-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+
+.dashboard-icon {
+    background-image: url('../../assets/icon/csi/dashboard-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    padding-right: 10px;
+    width: 25px; /* หรือขนาดที่เหมาะสม */
+    height: 25px;
+    /*margin-top:5px;*/
+    margin-right: 5px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+.user-mapper {
+    background-image: url('../../assets/icon/csi/icon-usergroup.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+
+.usergroup-permission {
+    background-image: url('../../assets/icon/csi/icon-lockgroup.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width: 20px; /* หรือขนาดที่เหมาะสม */
+    height: 20px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+}
+[aria-expanded="true"] .users-icon {
+    filter: brightness(0) invert(1);
+}
+
+[aria-expanded="true"] .inventory-icon {
+    filter: brightness(0) invert(1);
+}
+
+[aria-expanded="true"] .maintenance-icon {
+    filter: invert(0%) brightness(100%);
+}
+[aria-expanded="true"] .production-icon {
+    filter: invert(0%) brightness(100%);
+}
+[aria-expanded="true"] .quality-icon {
+    filter: invert(100%) brightness(100%);
+}
+
+
+
+
+.home-icon {
+    background-image: url('../../assets/icon/csi/home-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    padding-right: 10px;
+    width: 25px; /* หรือขนาดที่เหมาะสม */
+    height: 25px;
+    /*margin-top:5px;*/
+    margin-right: 5px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+
+
+.master-icon {
+    background-image: url('../../assets/icon/csi/mes-master-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width: 30px; /* หรือขนาดที่เหมาะสม */
+    height: 30px;
+    /*margin-top:5px;*/
+    margin-right: 5px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: brightness(0.5) invert(1);
+}
+[aria-expanded="true"] .master-icon {
+    filter: brightness(0) invert(1);
+}
+
+
+
+.dashboard-icon {
+    background-image: url('../../assets/icon/csi/dashboard-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width: 30px; /* หรือขนาดที่เหมาะสม */
+    height: 30px;
+    /*margin-top:5px;*/
+    margin-right: 5px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    /*filter: brightness(0.5) invert(1);*/
+}
+
+[aria-expanded="true"] .dashboard-icon {
+    filter: brightness(0) invert(1);
+}
+
+
+.transaction-icon {
+    background-image: url('../../assets/icon/csi/mes-transaction-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width: 30px; /* หรือขนาดที่เหมาะสม */
+    height: 30px;
+    /*margin-top:5px;*/
+    margin-right: 5px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    /*filter: brightness(1) invert(1);*/
+}
+
+[aria-expanded="true"] .transaction-icon {
+    filter: brightness(1) invert(1);
+}
+
+
+.menu-graph {
+    background-image: url('../../assets/icon/csi/menu-graph.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width: 25px; /* หรือขนาดที่เหมาะสม */
+    height: 25px;
+    /*margin-top:5px;*/
+    margin-right: 5px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: brightness(0.5) invert(1);
+}
+
+
+.logout {
+    background-image: url('../../assets/icon/csi/logout.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width:16px; /* หรือขนาดที่เหมาะสม */
+    height:16px;
+    /*margin-top:5px;*/
+    margin-right: 0px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    /*fill: #8F95B2;*/
+    /*filter: brightness(0.5) invert(1);*/
+}
+
+
+
+.maintenance-master-icon {
+    background-image: url('../../assets/icon/csi/maintenance-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width:40px; /* หรือขนาดที่เหมาะสม */
+    height:40px;
+    /*margin-top:5px;*/
+    margin-right: 0px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(42%) sepia(10%) saturate(400%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+
+
+.wip-icon {
+    background-image: url('../../assets/icon/csi/wip-icon.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 10px;
+    width: 29px; /* หรือขนาดที่เหมาะสม */
+    height: 29px;
+    /*margin-top:5px;*/
+    margin-right: 0px;
+    color: transparent; /* ปิด font icon ดั้งเดิม */
+    font-size: 0; /* ถ้าจำเป็น */
+    fill: #8F95B2;
+    filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(205deg) brightness(93%) contrast(88%);
+}
+.btn-wip-entry {
+        width: 36px;
+    height: 36px;
+    background-color: #DCF8FF;
+    color: #000000;
+}

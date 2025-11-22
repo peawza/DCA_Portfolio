@@ -1,0 +1,21 @@
+﻿.searchBox {
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+}
+.searchButton {
+    color: white;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+.topline{
+    border-top:2px solid gray;
+    margin-bottom:5px
+}

@@ -1,0 +1,106 @@
+﻿@inject IMessageLocalizer localizer
+
+<style>
+    .password-wrapper .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        z-index: 2; /* ดันให้อยู่เหนือ input */
+    }
+    .password-wrapper {
+        position: relative;
+        display: inline-block; /* หรือ block ตามต้องการ */
+        width: 100%;
+    }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 70px;
+        }
+
+    .toggle-password {
+        position: absolute;
+        right: 10px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .k-invalid-msg {
+        font-size: 0.8rem;
+        color: red;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    input.k-invalid {
+        border-color: #dc3545;
+    }
+
+    input.k-invalid {
+        background-color: #ffffff !important;
+    }
+
+    .password-wrapper input::-ms-reveal,
+    .password-wrapper input::-ms-clear,
+    .password-wrapper input::-webkit-credentials-auto-fill-button,
+    .password-wrapper input::-webkit-reveal-password-button {
+        display: none !important;
+        pointer-events: none;
+    }
+</style>
+
+<div id="changepassword-window-dialog" style="align-items: center; ">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <input type="hidden" id="d-password-user-id" value="" />
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="d-password-ip-username" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS012", "IP001"] <span class="text-color-red"></span>
+                    </label>
+                    <input id="d-password-ip-username" name="d-password-ip-username" maxlength="50" />
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="d-password-ip-name" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS012", "IP002"] <span class="text-color-red"></span>
+                    </label>
+                    <input id="d-password-ip-name" name="d-password-ip-name" maxlength="50" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="d-password-ip-password" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS012", "IP003"] <span class="text-color-red"> *</span>
+                    </label>
+                    @* <input type="password" id="d-password-ip-password" name="d-password-ip-password" maxlength="50" required validationMessage="@localizer["FieldRequired", @Resources["UMS012", "IP003"]]" /> *@
+                    <div class="password-wrapper">
+                        <input id="d-password-ip-password" name="d-password-ip-password" type="password"
+                               class="k-textbox form-control" required
+                               data-required-msg='@localizer["FieldRequired", @Resources["UMS012", "IP003"]]'
+                               data-securePassword-msg='@localizer["FieldSecurePassword"]' />
+                        <i class="fa-solid fa-eye toggle-password"
+                           onclick="togglePassword('d-password-ip-password', this)" aria-label="toggle password"></i>
+                    </div>
+                    <span class="k-invalid-msg" data-for="d-password-ip-password"></span>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="d-password-ip-changepassword" class="col-form-label text-left text-md-start w-100">
+                        @Resources["UMS012", "IP004"] <span class="text-color-red"> *</span>
+                    </label>
+                    @* <input type="password" id="d-password-ip-changepassword" name="d-password-ip-changepassword" maxlength="50" required data-required-msg="@localizer["FieldRequired", @Resources["UMS012", "IP004"]]" data-confirmMatch-msg='@localizer["ConfirmPasswordNotMatch"]' /> *@
+                    <div class="password-wrapper">
+                        <input id="d-password-ip-changepassword" name="d-password-ip-changepassword" type="password"
+                               class="k-textbox form-control" required
+                               data-required-msg='@localizer["FieldRequired", @Resources["UMS012", "IP004"]]'
+                               data-confirmMatch-msg='@localizer["ConfirmPasswordNotMatch"]' />
+                        <i class="fa-solid fa-eye toggle-password"
+                           onclick="togglePassword('d-password-ip-changepassword', this)" aria-label="toggle password"></i>
+                    </div>
+                    <span class="k-invalid-msg" data-for="d-password-ip-changepassword"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

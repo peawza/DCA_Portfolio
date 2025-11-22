@@ -1,0 +1,16 @@
+docker build -f Dockerfile.oclot -t mes-gateway-oclot:latest .
+docker build -f Dockerfile.yarp -t mes-gateway-yarp:latest .
+
+
+
+
+## push Docker oclot to AWS
+docker build -f Dockerfile.oclot -t 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com/mes/gateway:trials-oclot-0.0.2 --no-cache .
+docker push 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com/mes/gateway:trials-oclot-0.0.2
+
+
+
+
+## push Docker yarp to AWS
+docker build -f Dockerfile.yarp -t 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com/mes/gateway:trials-yarp-0.0.1 --no-cache .
+docker push 888577058116.dkr.ecr.ap-southeast-1.amazonaws.com/mes/gateway:0.0.1

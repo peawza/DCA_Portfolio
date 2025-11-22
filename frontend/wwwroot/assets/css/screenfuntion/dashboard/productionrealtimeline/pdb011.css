@@ -1,0 +1,210 @@
+﻿@font-face {
+    font-family: "TahomaWeb";
+    src: url("/assets/fonts/Tahoma/tahoma.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "TahomaWeb";
+    src: url("/assets/fonts/Tahoma/tahomabd.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #354052 !important;
+    background-image: none;
+    font-family: "TahomaWeb";
+    color: white;
+    height: 100%;
+}
+}
+
+.page-title-body {
+    font-size: 2.5vw;
+    font-weight: 800;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.headtext {
+    color: white !important;
+}
+
+
+
+.page-title {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-size: 2vw;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #354052;
+    margin-bottom: 0px;
+}
+
+.image_logo {
+    height: 8vh;
+    width: auto;
+    margin-right: 1vw;
+}
+
+.page-title-body {
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.lable-date-time {
+    font-size: 2vw;
+    margin-right: 1vw;
+}
+
+
+
+
+/* Dashboard Layout */
+.dashboard {
+    /*width: 100%;*/
+    display: flex;
+    gap: 16px;
+    background-color: #333;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 8px;
+    height: 260px;
+    justify-content: space-between;
+}
+
+/* กรอบของ Info Panel */
+.info-panel {
+    background-color: #333;
+    /*padding: 20px;*/
+    border-radius: 8px;
+    width: 32%;
+
+}
+
+/* จัดเรียงข้อมูลในแนวตั้ง */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    /*border-bottom: 1px solid #444;*/
+}
+
+/* Label (ด้านซ้าย) */
+.info-label {
+    max-width:40%;
+    text-align: right;
+    flex: 1;
+    font-weight: bold;
+    text-align: right;
+    color: #ddd;
+    font-size:1.3rem;
+}
+
+.info-value {
+    flex: 1;
+    font-weight: bold;
+    text-align: center;
+    color: #ddd;
+    font-size: 1.2rem;
+}
+
+.runtime span {
+    background-color: yellow;
+    color: black;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+
+/* Production Panel */
+.production-panel {
+    width: 32%;
+    text-align: center;
+    min-width: 200px;
+}
+
+.production-panel-label {
+    font-weight:bold;
+    font-size: 2rem;
+}
+.production-panel-info {
+    font-weight: bold;
+    font-size: 4.2rem;
+}
+
+.production-panel-pcs {
+    font-weight: bold;
+    font-size: 2rem;
+}
+.actual {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.quality {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.ok, .ng {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    font-size: 2.8rem;
+    width: 48%;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.ok {
+    background-color: green;
+    color: white;
+}
+
+.ng {
+    background-color: red;
+    color: white;
+}
+
+/* Chart Panel */
+.chart-panel {
+    width: 32%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*#oee-chart {
+    width: 120px;
+    height: 120px;
+}*/
+
+.oee-value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.oee-chart-ui {
+    /*position: relative;*/
+    display: block;
+    /*margin-bottom: -180px;*/
+    /*margin-top: 30px;*/
+    margin-right: -10px;
+    margin-left: -100px;
+    width: 600px;
+    height: 300px;
+    overflow: hidden;
+}

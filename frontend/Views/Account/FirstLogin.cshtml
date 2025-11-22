@@ -1,0 +1,377 @@
+﻿@using System.Globalization
+@using WEB.APP.Localization
+@inject IMessageLocalizer localizer
+@inject IMessageResources Resources
+@{
+    Layout = null;
+    string appName = @AppSharedData.ApplicationFullName;
+    var language = Context.Request.Query.ContainsKey("lang") ? Context.Request.Query["lang"].ToString() : "en";
+    if (@User.FindFirst("LanguageCode")?.Value == "th")
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("th-TH", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("th-TH", false);
+
+    }
+    else
+    {
+        CultureInfo.CurrentCulture = new CultureInfo("en-EN", false);
+        CultureInfo.CurrentUICulture = new CultureInfo("en-EN", false);
+
+
+    }
+
+}
+@await Html.PartialAsync("libs/_libs_css")
+@await Html.PartialAsync("libs/_libs_js")
+<script>
+    console.log("lang => @(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)");
+    var culture = kendo.culture("en-GB");
+    let CurrentCulture_now = "@CultureInfo.CurrentCulture.TwoLetterISOLanguageName"
+</script>
+<title>UACJ First Login</title>
+<link rel="icon" type="image/x-icon" href="/assets/fav.svg">
+<link rel="stylesheet" href="~/assets/css/login.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/assets/css/style_icon.css" asp-append-version="true">
+<style>
+    body{
+        height: 100vh;
+    }
+    .password-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 70px;
+        }
+
+    .toggle-password {
+        position: absolute;
+        right: 10px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .k-invalid-msg {
+        font-size: 0.8rem;
+        color: red;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    input.k-invalid {
+        border-color: #dc3545;
+    }
+
+    input.k-invalid {
+        background-color: #ffffff !important;
+    }
+
+    .password-wrapper input::-ms-reveal,
+    .password-wrapper input::-ms-clear,
+    .password-wrapper input::-webkit-credentials-auto-fill-button,
+    .password-wrapper input::-webkit-reveal-password-button {
+        display: none !important;
+        pointer-events: none;
+    }
+</style>
+
+<div class="left">
+    
+</div>
+<div class="login-box">
+    <div class="login-container">
+
+        <div class="brand-row">
+            <img src="/assets/images/Logo-login.png" alt="UACJ Logo" class="brand-logo">
+            @* <h1 class="brand-title">UACJ</h1> *@
+        </div>
+        <p>First Login to your Account<br>Welcome back! UACJ to login :</p>
+        <!-- User Profile -->
+        <input type="text" class="d-none" autocomplete="username" aria-hidden="true">
+        <input type="text" class="d-none" autocomplete="password" aria-hidden="true">
+        <input type="text" class="d-none" autocomplete="current-password" aria-hidden="true">
+        <input type="text" style="display:none">
+<input type="password" style="display:none">
+
+
+        <h5 class="text-muted"><i class="fa fa-user"></i> User Profile</h5>
+        <div class="row">
+            <input type="hidden" id="token" name="token" />
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                <label class="form-label" for="ip-firstname">User Name <span class="text-danger">*</span></label>
+                <input type="text" class="k-textbox form-control" id="ip-username" name="ip-username" disabled />
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                <label class="form-label" for="ip-firstname">Firstname <span class="text-danger">*</span></label>
+                <input type="text" class="k-textbox form-control" id="ip-firstname" name="ip-firstname" disabled/>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                <label class="form-label" for="ip-lastname">Lastname <span class="text-danger">*</span></label>
+                <input type="text" class="k-textbox form-control" id="ip-lastname" name="ip-lastname" disabled />
+            </div>
+        </div>
+
+        <!-- Security Section -->
+        <h5 class="text-muted mt-4"><i class="fa fa-lock"></i> Security</h5>
+        <div class="row" id="window-dialog-change-password">
+            <!-- Current Password -->
+            <div class="col-md-12 mb-2">
+                <label for="change-password-currentPassword" class="form-label">
+                    @Resources["ChangePassword", "CurrentPassword"] <span class="text-danger">*</span>
+                </label>
+                <div class="password-wrapper">
+                    <input id="change-password-currentPassword" name="change-password-currentPassword" type="password"
+                           class="k-textbox form-control" required
+                           data-required-msg="@localizer["FieldRequired", @Resources["ChangePassword", "CurrentPassword"]]" />
+                    <i class="fa-solid fa-eye toggle-password"
+                       onclick="togglePassword('change-password-currentPassword', this)"></i>
+
+                </div>
+                <span class="k-invalid-msg" data-for="change-password-currentPassword"></span>
+            </div>
+
+            <!-- New Password -->
+            <div class="col-md-12 mb-2">
+                <label for="change-password-newPassword" class="form-label">
+                    @Resources["ChangePassword", "NewPassword"] <span class="text-danger">*</span>
+                </label>
+                <div class="password-wrapper">
+                    <input id="change-password-newPassword"
+                           name="change-password-newPassword"
+                           type="password"
+                           class="k-textbox form-control"
+                           required minlength="6"
+                           @* autocomplete="new-password" *@
+                           inputmode="text" autocapitalize="off" spellcheck="false"
+                           data-required-msg='@localizer["FieldRequired", Resources["ChangePassword", "NewPassword"]]' />
+                    <i class="fa-solid fa-eye toggle-password"
+                       onclick="togglePassword('change-password-newPassword', this)"></i>
+                </div>
+                <span class="k-invalid-msg" data-for="change-password-newPassword"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="col-md-12 mb-2">
+                <label for="change-password-confirmPassword" class="form-label">
+                    @Resources["ChangePassword", "ConfirmPassword"] <span class="text-danger">*</span>
+                </label>
+                <div class="password-wrapper">
+                    <input id="change-password-confirmPassword"
+                           name="change-password-confirmPassword"
+                           type="password"
+                           class="k-textbox form-control"
+                           required
+                         @*   autocomplete="new-password" *@
+                           inputmode="text" autocapitalize="off" spellcheck="false"
+                           data-required-msg='@localizer["FieldRequired", Resources["ChangePassword", "ConfirmPassword"]]' />
+                    <i class="fa-solid fa-eye toggle-password"
+                       onclick="togglePassword('change-password-confirmPassword', this)"></i>
+                </div>
+                <span class="k-invalid-msg" data-for="change-password-confirmPassword"></span>
+            </div>
+
+            <!-- ใช้ใน JS -->
+            <input type="hidden" id="change-password-username" value='@User.FindFirst("UserName")?.Value' />
+
+            <div class="d-flex justify-content-center gap-3 pt-3 w-100">
+                <!-- Save Button -->
+                <button type="button" id="windowsSaveButton"
+                        class="mes-button-save k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+                        onclick="ChangePassword_onSaveDialog()">
+                    <span class="k-icon k-i-save k-button-icon"></span>
+                    <span class="k-button-text" id="text-export">
+                        @Resources["COMMON", "ChangePassword"]
+                    </span>
+                </button>
+
+                <!-- Cancel Button -->
+                <button type="button" id="windowsCancalButton"
+                        class="mes-button-cancel k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+                        onclick="ChangePassword_onCancelDialog()">
+                    <span class="k-icon k-i-arrow-left k-button-icon"></span>
+                    <span class="k-button-text">
+                        @* @Resources["COMMON", "CANCEL"] *@
+                        Back To Login
+                    </span>
+                </button>
+            </div>
+           
+
+        </div>
+
+    </div>
+
+</div>
+<style>
+    .password-wrapper {
+        position: relative;
+    }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            line-height: 1;
+            z-index: 2;
+        }
+</style>
+
+<script>
+    var messagePasswordDialog = new MessageDialog();
+
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+    }
+
+    // Validator
+    let ChangePassword_validataDialog = $("#window-dialog-change-password").kendoValidator({
+        errorTemplate: "<label class='k-invalid-msg'>#=message#</label>",
+        rules: {
+            confirmPassword: function (input) {
+                if (input.is("[name='change-password-confirmPassword']")) {
+                    return input.val() === $("#change-password-newPassword").val();
+                }
+                return true;
+            },
+            securePassword: function (input) {
+                if (input.is("[name='change-password-newPassword']")) {
+                    const value = input.val() ?? "";
+                    if (value.length < 6) return false;
+                    const hasUpper = /[A-Z]/.test(value);
+                    const hasLower = /[a-z]/.test(value);
+                    const hasNumber = /[0-9]/.test(value);
+                    const hasSpecial = /[^A-Za-z0-9]/.test(value);
+                    return hasUpper && hasLower && hasNumber && hasSpecial;
+                }
+                return true;
+            }
+        },
+        messages: {
+            required: "This field is required",
+            confirmPassword: "Passwords do not match",
+            securePassword: "Use at least 6 characters with uppercase, lowercase, number & symbol"
+        }
+    }).data('kendoValidator');
+
+    // เปิดหน้าต่าง + เคลียร์ค่าทุกครั้ง
+    async function ChangePassword_Show() {
+        await ui.Input.Clear("window-dialog-change-password", () => {
+            document.getElementById("change-password-username").value = '@User.FindFirst("UserName")?.Value';
+
+            const ids = [
+                "change-password-currentPassword",
+                "change-password-newPassword",
+                "change-password-confirmPassword"
+            ];
+            ids.forEach(id => {
+                const input = document.getElementById(id);
+                const icon = input?.parentElement?.querySelector(".toggle-password");
+                if (input) input.type = "password"; // force hide
+                if (icon) {
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
+                if (input) input.value = ""; // clear value
+            });
+
+            if (ChangePassword_validataDialog) ChangePassword_validataDialog.reset();
+        });
+
+        $("#window-dialog-change-password").data("kendoWindow")?.open();
+    }
+
+    function ChangePassword_onCancelDialog(e) {
+        var confirmationDialog = new ConfirmationDialog();
+        confirmationDialog.open({
+            yes: function () {
+                 location.replace('/Account/SignIn');
+            }
+        }, Message("Confirmation", "ConfirmExitDialog"), "Confirmation");
+    }
+
+    async function ChangePassword_onSaveDialog() {
+        console.log("AAAAAA");
+
+        if (!ChangePassword_validataDialog?.validate()) {
+             console.log("ChangePassword_validataDialog");
+            return;
+        }
+
+        const TextConfirmation = Message("Confirm", "ConfirmChangePassword");
+        var confirmationDialogShowDetails = new ConfirmationDialog("dialogshowdetails");
+        confirmationDialogShowDetails.open({
+            yes: async function () {
+                const username = document.getElementById("change-password-username").value;
+                const oldPassword = document.getElementById("change-password-currentPassword").value;
+                const newPassword = document.getElementById("change-password-newPassword").value;
+
+                try {
+                        const result = await APIPost(_url_callapi + "/api/auth/SSS010/FirstLogin", {
+                                  "UserName": document.getElementById('ip-username').value,
+                                  "OldPassword":oldPassword,
+                                  "NewPassword": newPassword,
+                                  "Token": document.getElementById('token').value
+                                });
+
+                    // รองรับหลายรูปแบบ payload
+                    const payload = result?.data ?? result;
+                    const ok = (payload?.StatusCode === "200" );
+
+                    if (ok) {
+                        messagePasswordDialog.success(Message("Information", "SaveSuccess") ,()=>{
+                            location.replace('/Account/SignIn');
+                        });
+                        $("#window-dialog-change-password").data("kendoWindow")?.close();
+                    } else {
+                        const msgCode = payload?.MessageCode;
+                        messagePasswordDialog.error(Message("Warning", msgCode), () => {
+                            document.getElementById("change-password-currentPassword")?.focus();
+                        });
+                    }
+                } catch (err) {
+                    messagePasswordDialog.error(Message("Warning", "NETWORK_OR_SERVER_ERROR"), () => {
+                        document.getElementById("change-password-currentPassword")?.focus();
+                    });
+                }
+            }
+        }, TextConfirmation, "Confirmation");
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const qs = new URLSearchParams(location.search);
+
+      const token     = qs.get('token')     || '';
+      const username  = qs.get('username')  || '';
+      const firstname = qs.get('firstname') || '';
+      const lastname  = qs.get('lastname')  || '';
+
+      // ใส่ค่า
+      document.getElementById('token').value = token;
+
+      const ipUsername  = document.getElementById('ip-username');
+      const ipFirstname = document.getElementById('ip-firstname');
+      const ipLastname  = document.getElementById('ip-lastname');
+
+      if (ipUsername)  { ipUsername.value  = username; }
+      if (ipFirstname) { ipFirstname.value = firstname;  }
+      if (ipLastname)  { ipLastname.value  = lastname;  }
+
+      // ตรวจค่า minimum: ต้องมี token + username
+      if (!token || !username) {
+        // แสดงข้อความ/redirect ตามต้องการ        
+        location.replace('/Account/SignIn');
+      }
+    });
+</script>

@@ -1,0 +1,124 @@
+﻿@font-face {
+    font-family: "TahomaWeb";
+    src: url("/assets/fonts/Tahoma/tahoma.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "TahomaWeb";
+    src: url("/assets/fonts/Tahoma/tahomabd.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+body {
+    overflow: hidden;
+    background-color: #354052 !important;
+    background-image: none;
+    font-family: "TahomaWeb";
+}
+
+.page-title-body {
+    font-size: 2.5vw;
+    font-weight: 800;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.headtext {
+    color: white !important;
+}
+
+
+
+.page-title {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-size: 2vw;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #354052;
+    margin-bottom: 0px;
+}
+
+.image_logo {
+    height: 8vh;
+    width: auto;
+    margin-right: 1vw;
+}
+
+.page-title-body {
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.lable-date-time {
+    font-size: 2vw;
+    margin-right: 1vw;
+}
+
+/* ------------------------------------------------------------------------------------------- */
+
+.content {
+    height: 100vh;
+}
+
+/* Table Styling */
+
+.table-container {
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 1.5vh;
+}
+
+    .table thead th {
+        border: none;
+    }
+
+    .table th, .table td {
+        text-align: center;
+        padding: 1.4vh;
+        border: none;
+        font-size: 1vw;
+        font-weight: bold;
+    }
+
+    .table th {
+        color: #fff;
+        font-size: 1vw;
+    }
+
+.row-green {
+    background-color: #7FC146;
+    color: #000;
+}
+
+.row-yellow {
+    background-color: #E9A431;
+    color: #000;
+}
+
+.row-red {
+    background-color: #C4272F;
+    color: #000;
+}
+
+.row-darkgrey {
+    background-color: #ACACAC;
+    color: #000;
+}
+
+.row-lightgrey {
+    background-color: #E0E0E0;
+    color: #000;
+}

@@ -1,0 +1,367 @@
+﻿html, body {
+    /*margin: 0;*/
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    background-image: none;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 7rem; /* Plan, Target, Actual */
+    font-weight: 700;
+    line-height: 12rem;
+}
+.act-std {
+    font-size: 6rem; /* Plan, Target, Actual */
+    font-weight: 700;
+    margin-left: -10px;
+}
+#plan-count, #target-count, #actual-count, #acc-actual-count, #diff {
+    font-size: 10rem;
+    margin: 0;
+}
+
+h3 {
+    font-size: 5rem; /* Status, start-end time */
+    font-weight: 700;
+    color: #e5ff00;
+}
+
+h4 {
+    font-size: 2.6rem; /* manual, run-time */
+    font-weight: 700;
+}
+
+#setup-time, #manual-downtime, #run-time {
+    font-size: 3rem;
+    color: white;
+    /*margin-top: 0px;*/
+    text-align: end;
+}
+
+h5 {
+    color: white; /*chart-title.*/
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+span {
+    color: white;
+}
+
+p {
+    /*margin: 5px 0;*/
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: white;
+    margin-top: -15px;
+
+}
+
+.status-time {
+    padding: 5px;
+    text-align: center;
+    
+}
+
+    .status-time h3 {
+        color: black;
+        margin-top: 0px;
+        margin-bottom: -20px;
+    }
+
+#status-time {
+    margin-top: 10px;
+    color: black;
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+#start-time, #end-time {
+    font-weight: 400;
+}
+#setup-time {
+    color: #009ff6;
+}
+
+#manual-downtime {
+    color: red;
+}
+
+#run-time {
+    color: #32CD32;
+}
+
+.info {
+    letter-spacing: 1px;
+    margin-top: 8px !important;
+}
+
+.machine-info p, .downtime p {
+    color: black;
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+.unit {
+    font-size: 3rem; 
+    margin-left: 15px; 
+}
+
+.machine-info {
+    margin-right: 0px;
+    /*margin-left: 0px;*/
+    margin-top: 10px;
+}
+
+.col-manual-auto{
+    margin-top: 40px;
+}
+
+.target-mc {
+    margin-top: -25px;
+}
+
+/*.small-yellow-box {
+    width: 15px;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 0px;
+    background-color: #e5ff00;
+}*/
+
+.separator-line-center {
+    border-right: 2px solid white;
+    z-index: 999;
+    height: 97%;
+    width: 60%;
+    position: fixed;
+    margin-top: 1rem;
+    /*top: 0;*/ /* ให้แนบอยู่ด้านบนสุด */
+    /*left: 50%;*/ /* จัดกึ่งกลางแนวนอน */
+    transform: translateX(0%); /* ปรับให้อยู่กลางหน้าจอแนวนอน */
+}
+
+#chart-title {
+    color: white; /*chart-title.*/
+    font-weight: 700;
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+
+.chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    /*border: 1px solid #ddd;*/
+    padding: 0px;
+}
+
+.chart-box {
+    flex: 1 1 22%; /* 22% width with flex-grow and flex-shrink */
+    margin: -40px;
+    min-width: 100px; /* Minimum width for responsiveness */
+    text-align: center;
+}
+
+.card {
+    margin-top: 10px;
+    margin-right: 15px;
+    margin-bottom: 40px;
+}
+
+.machine-info-table {
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    border-collapse: collapse;
+    margin: 15px -10px;
+    font-weight: 700;
+}
+
+    .machine-info-table td {
+        padding-top: 7px;
+        padding-left: 20px;
+        padding-right: 25px;
+        text-align: left;
+        font-size: 1.9rem;
+        line-height: initial;
+    }
+
+#machine-name, #plan, #actual, #takt-time, #model-code, #ok, #ng, #rework, #job-order {
+    font-size: 1.9rem;
+    padding-left: 0px;
+}
+#rework {
+    padding-bottom: 15px;
+}
+
+@media (max-width: 1400px) {
+    h2 {
+        font-size: 5rem; /* Plan, Target, Actual */
+        font-weight: 700;
+        line-height: 8rem;
+        margin-left: -10px;
+    }
+    .act-std {
+        font-size: 4.6rem; /* Plan, Target, Actual */
+        font-weight: 700;
+        margin-left: -10px;
+    }
+
+    h3 {
+        font-size: 4.2rem; /* Status, start-end time */
+        font-weight: 700;
+        color: #e5ff00;
+        margin-top: 10px;
+    }
+
+    h4 {
+        font-size: 1.7rem; /* manual, run-time */
+        font-weight: 700;
+        margin-top: 0px;
+        margin-right: -30px;
+        line-height: initial;
+    }
+
+    h5 {
+        color: white; /*chart-title.*/
+        font-weight: 700;
+        font-size: 1.4rem;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        margin-top: 10px;
+        margin-right: 15px;
+        margin-bottom: 40px;
+    }
+
+    .chart-container {
+        margin-top: 20px;
+    }
+
+    p {
+        margin-right: -20px;
+        font-size: 2rem;
+        font-weight: 600;
+        color: white;
+    }
+
+    .unit {
+        font-size: 1.8rem;
+        margin-left: 15px;
+    }
+
+    .info {
+        margin-top: -10px !important;
+    }
+
+/*    .small-yellow-box {
+        margin-top: 25px;
+    }*/
+
+    #plan-count, #target-count, #actual-count, #acc-actual-count, #diff {
+        font-size: 7.5rem;
+        margin: 0;
+        margin-right: -10px;
+    }
+
+    #diff-count {
+        margin-bottom: 35px !important;
+        /*margin-left: -90px;*/
+    }
+
+    .machine-info p, .downtime p, #status-time {
+        color: black;
+        font-weight: 700;
+        font-size: 1.8rem;
+    }
+    #status-time {
+        color: black;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 0px;
+    }
+
+    .col-manual-auto {
+        margin-top: -10px;
+    }
+
+    #manual-downtime, #run-time, #setup-time {
+        color: white;
+        margin-top: 0px;
+        text-align: end;
+    }
+
+    #setup-time, #manual-downtime, #run-time {
+        font-size: 2.4rem !important;
+    }
+
+    #setup-time {
+        color: #009ff6;
+    }
+    #manual-downtime{
+        color: red;
+    }
+    #run-time {
+        color: #32CD32;
+    }
+
+    .target-mc {
+        margin-top: -15px;
+    }
+
+    .actual-target {
+        margin-top: 15px;
+    }
+
+    #part-no {
+        font-size: 1.2rem;
+    }
+
+    .machine-info-table {
+        width: 100%;
+        background-color: white;
+        color: black;
+        border-radius: 5px;
+        border-collapse: collapse;
+        margin: 15px -10px;        
+        font-weight: 700;
+    }
+
+        .machine-info-table td {
+            padding-top: 7px;
+            padding-left: 20px;
+            padding-right: 25px;
+            text-align: left;
+            font-size: 1.9rem;
+            line-height: initial;
+        }
+
+    #machine-name, #eff-now, #actual-target, #takt-time, #plan, #actual, #model-code, #job-order {
+        font-size: 1.8rem;
+        padding-left: 0px;
+    }
+    s#rework {
+        padding-bottom: 15px;
+    }
+}    

@@ -1,0 +1,75 @@
+﻿@inject IMessageLocalizer localizer
+
+<style>
+    /* #user-window-dialog {
+            min-height: 600px;
+            max-height: 600px;
+        } */
+
+</style>
+
+<div id="misc-window-dialog" style="align-items: center; ">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <input type="hidden" id="status-mode" value="" />
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-module" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP001"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-module" name="ip-module" required validationMessage="@localizer["FieldRequired", @Resources["CMS041", "IP001"]]" />
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-miscellaneoustype" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP002"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-miscellaneoustype" name="ip-miscellaneoustype" required validationMessage="@localizer["FieldRequired", @Resources["CMS041", "IP002"]]" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-valuecode" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP003"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-valuecode" name="ip-valuecode" required validationMessage="@localizer["FieldRequired", @Resources["CMS041", "IP003"]]" />
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-seqno" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP004"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-seqno" name="ip-seqno" required validationMessage="@localizer["FieldRequired", @Resources["CMS041", "IP004"]]" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-valueen" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP005"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-valueen" name="ip-valueen" required validationMessage="@localizer["FieldRequired", @Resources["CMS041", "IP005"]]" />
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-valuelocal" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP006"] <span class="text-color-red"> *</span>
+                    </label>
+                    <input id="ip-valuelocal" name="ip-valuelocal" required validationMessage="@localizer["FieldRequired", @Resources["CMS041", "IP006"]]" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 mt-2 mb-2">
+                    <label for="ip-description" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP007"] <span class="text-color-red"></span>
+                    </label>
+                    <textarea id="ip-description" name="ip-description" maxlength="500"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mt-2 mb-2">
+                    <label for="ip-status" class="col-form-label text-left text-md-start w-100">
+                        @Resources["CMS041", "IP008"] <span class="text-color-red"></span>
+                    </label>
+                    <input id="ip-status" name="ip-status" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

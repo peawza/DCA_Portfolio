@@ -1,0 +1,9 @@
+﻿.bottomline{
+    border-top:2px solid gray
+}
+.qrcode-center{
+    justify-items:center !important;
+}
+.savephoto-center{
+    text-align-last:center
+}

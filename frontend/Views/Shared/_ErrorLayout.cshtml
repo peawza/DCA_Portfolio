@@ -1,0 +1,42 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    @* <meta name="description" content="@appName" /> *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Error Page</title>
+    <link rel="stylesheet" href="~/assets/lib/twitter-bootstrap/css/bootstrap.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    @RenderSection("Styles", required: false)
+    <script src="~/assets/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+    <style type="text/css">
+        .error-box {
+            height: 100%;
+            width: 100%;
+        }
+
+        .error-box {
+            position: fixed;
+            background: url("@Url.Content("~/assets/images/error-bg.jpg")") no-repeat bottom center #fff;
+        }
+
+            .error-box .error-title {
+                font-size: 210px;
+                font-weight: 900;
+                text-shadow: 4px 4px 0 #fff, 6px 6px 0 #343a40;
+                line-height: 210px;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="page-content container-fluid mb-2">
+            @RenderBody()
+        </div>
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

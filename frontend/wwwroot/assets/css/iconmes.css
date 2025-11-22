@@ -1,0 +1,15 @@
+.icon-mes {
+    width: 1em;  /* Matches FontAwesome's default icon size */
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.125em; /* Aligns with text baseline like FontAwesome */
+    fill: currentColor; /* Allows color to be inherited from text color */
+}
+
+.icon-mes-xs { width: 0.75em; height: 0.75em; }
+.icon-mes-sm { width: 0.875em; height: 0.875em; }
+.icon-mes-lg { width: 1.25em; height: 1.25em; }
+.icon-mes-2x { width: 2em; height: 2em; }
+.icon-mes-3x { width: 3em; height: 3em; }
+.icon-mes-4x { width: 4em; height: 4em; }
+.icon-mes-5x { width: 5em; height: 5em; }

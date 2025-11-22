@@ -1,0 +1,196 @@
+﻿.k-window-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px;
+}
+.k-icon {
+    font-size: 32px !important;
+}
+.k-list-md .k-list-item, .k-list-md .k-list-optionlabel {
+}
+
+body {
+    background-color: #2f2f2f !important;
+    color: #fff;
+    height: 100vh;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+.main-container {
+    padding-top:0px !important;
+    padding: 20px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-box {
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 30px;
+    flex-grow: 1;
+}
+
+.title-section {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.machine-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+    .machine-title i {
+        margin-right: 10px;
+    }
+
+.label-box {
+    background-color: #e9ecef;
+    border-radius: 5px;
+    padding: 15px 15px;
+}
+
+.input-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.btn-large {
+    font-size: 2rem;
+    padding: 20px 0;
+    font-weight: bold;
+    min-height: 180px;
+    width: 100%;
+}
+
+.btn-checklist {
+    background-color: #f39c12;
+    color: #fff;
+}
+
+    /*.btn-checklist:hover {
+        background-color: #e67e22;
+    }*/
+    /*.btn-checklist:disabled:hover {
+        pointer-events: none !important;
+        cursor: not-allowed !important;
+    }*/
+.btn-machine-stop {
+    background-color: #c0392b;
+    color: #fff;
+}
+.btn.disabled, .btn:disabled {
+    pointer-events: none !important; 
+    opacity: 0.65;
+    cursor: not-allowed !important;
+}
+/*.btn-machine-stop:hover {
+        background-color: #e74c3c;
+    }*/
+/*.btn-machine-stop:disabled:hover {
+        pointer-events: none !important;
+        cursor: not-allowed !important;
+    }*/
+.footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: #ccc;
+    margin-top: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    /* background-color: #333333; */
+}
+
+    .header .icon-circle1 {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px !important;
+    }
+
+.icon-home1 {
+    background-color: #0099ff;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.icon-refresh1 {
+    background-color: #ff0000;
+}
+
+.h-90 {
+    height: 90%;
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+}
+
+.precision-manufacturing {
+    font-size: 50px !important;
+}
+
+.form-control {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+input[readonly] {
+    background-color: #eee !important;
+    color: #555;
+    font-weight: bold;
+    cursor: default;
+    border-color: #ccc;
+}
+
+.k-window-title {
+    font-size: 3.25rem !important;
+}
+.k-window-content, .k-window-content.k-dialog-content, .fs-lg, .fs-xl {
+    font-size: 2.5rem !important;
+}
+.k-dialog-buttongroup.k-actions {
+    font-size: 2.5rem !important;
+}
+.k-window .k-button {
+    font-size: 2.5rem !important;
+}
+.k-window {
+    min-width: 600px;
+}
+
+.k-dialog-titlebar.k-dialog-titlebar-warning {
+    background-color: #ffc107;
+}

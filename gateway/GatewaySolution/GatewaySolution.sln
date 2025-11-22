@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway_ocelot_Solution", "Gateway_ocelot_Solution.csproj", "{992A7155-EF44-402E-866E-DAF0DE3034B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "..\Libraries\Utils\Utils.csproj", "{6DDA8C4B-E266-425A-9394-B5248EE4437A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{992A7155-EF44-402E-866E-DAF0DE3034B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{992A7155-EF44-402E-866E-DAF0DE3034B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{992A7155-EF44-402E-866E-DAF0DE3034B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{992A7155-EF44-402E-866E-DAF0DE3034B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DDA8C4B-E266-425A-9394-B5248EE4437A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DDA8C4B-E266-425A-9394-B5248EE4437A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DDA8C4B-E266-425A-9394-B5248EE4437A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DDA8C4B-E266-425A-9394-B5248EE4437A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9328145A-9AF3-4F95-BBA5-4A33C4292C6A}
+	EndGlobalSection
+EndGlobal

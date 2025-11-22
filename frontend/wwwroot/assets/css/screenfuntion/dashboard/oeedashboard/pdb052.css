@@ -1,0 +1,402 @@
+﻿:root {
+    --label-text: 20px;
+    --label-text-time: 20px;
+    --label-title: 20px;
+    --label-value: 20px;
+    --label-unit: 20px;
+    --label-info: 30px;
+    --label-actual-value: 40px;
+    --label-status-machine:40px;
+}
+
+/*@media (min-width: 1921px) {
+    :root {
+        --label-text: 40px;
+        --label-title: 50px;
+        --label-value: 50px;
+        --label-unit: 30px;
+    }
+}
+
+@media (min-height: 970px) {
+    :root {
+        --label-text: 30px;
+        --label-text-time: 50px;
+        --label-title: 50px;
+        --label-value: 60px;
+        --label-unit: 40px;
+        --label-info: 40px;
+        --label-actual-value: 140px;
+        --label-status-machine: 100px;
+    }
+}*/
+
+.card-status-machine {
+    font-size: var(--label-status-machine);
+}
+
+/*html, body {*/
+    /*margin: 0;*/
+    /*margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;*/
+    /*background-color: black !important;*/
+    /*background-image: none;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}*/
+
+.card {
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: 20px;
+    /*border-color: white;*/
+    border: 1px solid rgba(0, 0, 0, .125);
+    /*box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);*/
+    box-shadow: 0px 1px 15px rgba(255, 255, 255, 0.5); /* สีขาว */
+    padding: 8px 16px;
+    /*padding-bottom: !important;*/
+    /*margin: 5px;*/
+    margin-left: 5px;
+    margin-right: 5px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    text-align: left;
+}
+
+/*.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}*/
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #f5f7fa;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+    .card-icon img {
+        width: 24px;
+        height: 24px;
+    }
+
+/*.card-actual .card-label {
+    font-size: 100px !important;
+}*/
+.card-actual .card-value {
+    font-size: var(--label-actual-value) !important;
+}
+
+.card-actual .card-title {
+    font-size: var(--label-text);
+}
+
+.card-label {
+    color: #000000;
+    font-size: var(--label-text);
+    font-weight:600;
+    margin-bottom: 4px;
+    /*display: -webkit-box;*/
+}
+
+.card-value {
+    font-size: var(--label-title);
+    font-weight: 600;
+    color: #000000;
+    -webkit-line-clamp: 1; /* จำกัด 2 บรรทัด */
+    -webkit-box-orient: vertical;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-title {
+    font-size: var(--label-title);
+    font-weight: 600;
+    color: #000000;
+    -webkit-line-clamp: 1; /* จำกัด 2 บรรทัด */
+    -webkit-box-orient: vertical;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.card-info {
+    font-size: var(--label-info);
+    font-weight: 600;
+    color: #ffffff;
+    -webkit-line-clamp: 1; /* จำกัด 2 บรรทัด */
+    -webkit-box-orient: vertical;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.title-downtime-time-bg {
+    background-color: #FF0000;
+    /*   color: #d60027;*/
+}
+
+.title-downtime-time {
+    /*background-color: #ffe3e6;*/
+    color: #FFFF;
+}
+
+.title-run-time-bg {
+    background-color: #00FF7F;
+}
+
+.title-run-time {
+    color: #008000;
+}
+
+.title-break-time-bg {
+    background-color: #FFE699;
+}
+
+.title-break-time {
+    color: #C55A11;
+}
+
+.title-setup-time-bg {
+    background-color: #00B0F0;
+}
+
+.title-setup-time {
+    color: #FFFFFF;
+}
+
+
+
+
+.card-downtime {
+    height: 95%;
+}
+
+#lable-status {
+    font-weight: 800;
+    font-size: var(--label-status-machine);
+}
+
+.card-label-actual {
+    color: #ffc107;
+}
+
+    .card-label-actual.text {
+        font-size: 50px !important;
+    }
+/*status-container */
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 999px;
+    padding: 5px 20px;
+    width: fit-content;
+}
+
+.status-label {
+    font-weight: 600;
+    font-size: var(--status-font-size);
+    margin-right: 10px;
+    color: #333;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: var(--status-font-size);
+    font-weight: 500;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.work {
+    background-color: #e6f9e9;
+    color: #007A00;
+}
+
+    .work .dot {
+        background-color: #007A00;
+    }
+
+.setup {
+    background-color: #e0f2ff;
+    color: #007aff;
+}
+
+    .setup .dot {
+        background-color: #007aff;
+    }
+
+.break {
+    background-color: #fff4d6;
+    color: #ff9900;
+}
+
+    .break .dot {
+        background-color: #ff9900;
+    }
+
+.downtime {
+    background-color: #ffe3e6;
+    color: #d60027;
+}
+
+    .downtime .dot {
+        background-color: #d60027;
+    }
+
+.tooltip-downtime {
+    color: black;
+}
+
+.apexcharts-heatmap {
+    border-radius: 20px !important;
+    overflow: hidden; /* 👈 ป้องกันกราฟทะลุออก */
+    background-color: #ffffff; /* ใส่พื้นหลังเพื่อให้ขอบชัด */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* เพิ่มเงาให้สวยขึ้น (optional) */
+}
+
+.apexcharts-series {
+    border-radius: 20px !important;
+    overflow: hidden; /* 👈 ป้องกันกราฟทะลุออก */
+    background-color: #ffffff; /* ใส่พื้นหลังเพื่อให้ขอบชัด */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* เพิ่มเงาให้สวยขึ้น (optional) */
+}
+
+.title-time-machine {
+    font-size: var(--label-value) !important;
+}
+
+.lable-time-machine {
+    font-size: var(--label-value);
+    font-weight: 600;
+}
+
+.box-unit {
+    font-weight: 600;
+    text-align: center;
+    font-size: var(--label-unit);
+}
+
+.card-downtime-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /*align-items: center;*/
+}
+
+
+#lable-actual-ok {
+    color: #000;
+    font-size: var(--label-title);
+   
+}
+
+
+#lable-actual-ng {
+    color: #000;
+    font-size: var(--label-title);
+   
+}
+
+
+.chart-box {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+}
+
+    .chart-box > div {
+        width: 100%;
+        height: 150px; /* หรือขนาดที่คุณต้องการ */
+    }
+
+#lable-status-card {
+    font-weight: 600 !important;
+}
+
+[aria-status="Downtime"], [aria-status="SetupDelay"], [aria-status="BreakDelay"] {
+    background-color: #FF0000;
+    font-weight: 800 !important;
+}
+
+[aria-status="Break"] {
+    background-color: #ff9900;
+    font-weight: 800 !important;
+}
+
+[aria-status="Setup"] {
+    background-color: #00B0F0;
+    font-weight: 800 !important;
+}
+
+[aria-status="Run"] {
+    background-color: #00FF01;
+    font-weight: 800 !important;
+}
+
+
+[aria-lable-status="Downtime"], [aria-lable-status="SetupDelay"], [aria-lable-status="BreakDelay"] {
+    color: white;
+}
+
+[aria-lable-status="Break"] {
+    color: white;
+}
+
+[aria-lable-status="Setup"] {
+    color: white;
+}
+
+[aria-lable-status="Run"] {
+    color: #000000;
+}
+
+.text-status {
+    color: white;
+}
+
+
+.bg-ok-green {
+    /*background-color: #008000;*/ /* เขียวเข้มแบบภาพ */
+}
+
+.bg-ng-green {
+    /*background-color: #DC143C;*/ /* เขียวเข้มแบบภาพ */
+}
+
+.card-label-text-time {
+    font-size: var(--label-text-time);
+}
