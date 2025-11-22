@@ -1,0 +1,8 @@
+[submodule "api.auth/Libraries/Utils"]
+	path = api.auth/Libraries/Utils
+	url = git@github.com:peawza/peaw_utils_core.git
+	branch = main
+[submodule "api.business/Libraries/Utils"]
+	path = api.business/Libraries/Utils
+	url = git@github.com:peawza/peaw_utils_core.git
+	branch = main
