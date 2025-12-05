@@ -171,7 +171,7 @@ namespace Authentication.Repositories
 
         //    record.v.DeletedFlag = true;
         //    record.v.DeletedBy = criteria.DeletedBy;
-        //    record.v.DeletedDate = DateTime.Now;
+        //    record.v.DeletedDate = DateTime.UtcNow;
 
         //    await _db.SaveChangesAsync();
 
@@ -231,7 +231,7 @@ namespace Authentication.Repositories
         //        existing.DeletedBy = null;
         //        existing.DeletedDate = null;
         //        existing.UpdatedBy = criteria.CreatedBy;
-        //        existing.UpdatedDate = DateTime.Now;
+        //        existing.UpdatedDate = DateTime.UtcNow;
 
         //        await _db.SaveChangesAsync();
 
@@ -255,7 +255,7 @@ namespace Authentication.Repositories
         //        ValueLocal = criteria.Value2,
         //        ActiveFlag = criteria.Status,
         //        CreatedBy = criteria.CreatedBy,
-        //        CreatedDate = DateTime.Now,
+        //        CreatedDate = DateTime.UtcNow,
         //        DeletedFlag = false
         //    };
 
@@ -310,7 +310,7 @@ namespace Authentication.Repositories
         //    value.ValueLocal = criteria.Value2;
         //    value.ActiveFlag = criteria.Status;
         //    value.UpdatedBy = criteria.UpdatedBy;
-        //    value.UpdatedDate = DateTime.Now;
+        //    value.UpdatedDate = DateTime.UtcNow;
 
         //    await _db.SaveChangesAsync();
 

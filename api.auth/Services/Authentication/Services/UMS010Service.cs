@@ -86,19 +86,21 @@ namespace Authentication.Services
             {
                 criteria.Password = PasswordHelper.GeneratePassword(8);
                 var result = await _repository.CreateUser(criteria);
-                var apiResultSendEmail = await _repository.SendEmailFirstLogin(new SendEmailFirstLogin_Criteria
-                {
-                    FullName = criteria.FirstName + " " + criteria.LastName,
-                    UserName = criteria.UserName,
-                    Password = criteria.Password,
-                    Email = criteria.Email,
-                    FirstLoginToken = result.FirstLoginToken,
 
-                });
-                result.FirstLoginToken = "";
+
 
                 if (result.StatusCode == "200")
                 {
+                    var apiResultSendEmail = await _repository.SendEmailFirstLogin(new SendEmailFirstLogin_Criteria
+                    {
+                        FullName = criteria.FirstName + " " + criteria.LastName,
+                        UserName = criteria.UserName,
+                        Password = criteria.Password,
+                        Email = criteria.Email,
+                        FirstLoginToken = result.FirstLoginToken,
+
+                    });
+                    result.FirstLoginToken = "";
                     await transaction.CommitAsync();
                 }
                 else

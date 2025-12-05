@@ -127,7 +127,7 @@ namespace Authentication.Repositories
                     Description = criteria.Description,
                     IsActive = criteria.IsActive == true ? true : false,
                     CreateBy = criteria.CreateBy,
-                    CreateDate = DateTime.Now,
+                    CreateDate = DateTime.UtcNow,
                     ConcurrencyStamp = Guid.NewGuid().ToString()
                 };
 
@@ -282,7 +282,7 @@ namespace Authentication.Repositories
                 }
 
                 role.UpdateBy = data.User;
-                role.UpdateDate = DateTime.Now;
+                role.UpdateDate = DateTime.UtcNow;
                 var userRoles = await _db.UserRoles.ToListAsync();
                 var toRemove = userRoles.Where(ur => ur.RoleId == data.RoleId).ToList();
                 _db.UserRoles.RemoveRange(toRemove);

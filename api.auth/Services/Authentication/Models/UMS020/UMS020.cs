@@ -51,7 +51,7 @@
             public string? Description { get; set; }
             public bool? IsActive { get; set; }
             public string? CreateBy { get; set; }
-            public DateTime CreateDate { get; set; } = DateTime.Now;
+            public DateTime CreateDate { get; set; } = DateTime.UtcNow;
 
         }
         public class UMS020_AddRole_Result
@@ -69,7 +69,7 @@
         {
             public string Id { get; set; }
             public string? UpdateBy { get; set; }
-            public DateTime UpdateDate { get; set; } = DateTime.Now;
+            public DateTime UpdateDate { get; set; } = DateTime.UtcNow;
 
         }
         public class UMS020_UpdateRole_Result : UMS020_AddRole_Result

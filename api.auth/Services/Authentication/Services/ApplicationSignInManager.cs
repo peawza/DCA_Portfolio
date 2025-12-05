@@ -70,7 +70,7 @@ namespace Authentication.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddMinutes(Convert.ToDouble(this.configuration["JwtExpireMinutes"]));
+            var expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(this.configuration["JwtExpireMinutes"]));
 
             var token = new JwtSecurityToken(
                 this.configuration["JwtIssuer"],

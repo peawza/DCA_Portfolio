@@ -68,7 +68,7 @@ namespace Authentication.Services
             // 2) Gen OTP ใหม่
             var otpCode = GenerateNumericOtp(6);
             var otpHash = HashOtp(otpCode);
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var referenceNo = await GenerateReferenceNoAsync(ct);
 
             var entity = new tb_LoginOtp
@@ -130,7 +130,7 @@ namespace Authentication.Services
             {
                 throw new InvalidOperationException("OTP_NOT_FOUND_OR_NOT_PENDING");
             }
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             // Gen OTP ใหม่บน record เดิม (Token เดิม)
             var newCode = GenerateNumericOtp(6);
@@ -176,7 +176,7 @@ namespace Authentication.Services
         // -------------------------------------------------------
         public async Task<VerifyOtpResponse> VerifyOtpAsync(VerifyOtpRequest request, string requestIp, string userAgent, CancellationToken ct = default)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             var entity = await _db.LoginOtps
                 .FirstOrDefaultAsync(x => x.OtpId == request.Token, ct);
@@ -303,7 +303,7 @@ namespace Authentication.Services
             string channel,
             CancellationToken ct)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
 
             var pendingList = await _db.LoginOtps

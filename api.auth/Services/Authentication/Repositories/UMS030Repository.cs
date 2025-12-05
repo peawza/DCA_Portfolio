@@ -149,8 +149,8 @@ namespace Authentication.Repositories
                                     GroupId = source.GroupId,
                                     ScreenId = source.ScreenId,
                                     FunctionCode = source.FunctionCode,
-                                    CreateDate = DateTime.Now,
-                                    UpdateDate = DateTime.Now,
+                                    CreateDate = DateTime.UtcNow,
+                                    UpdateDate = DateTime.UtcNow,
                                     CreateBy = source.CreateBy, // สมมุติว่ามี property นี้ใน criteria
                                     UpdateBy = source.UpdateBy  // ถ้ามี
                                 };
@@ -163,7 +163,7 @@ namespace Authentication.Repositories
                                 if (existing.FunctionCode != source.FunctionCode)
                                 {
                                     existing.FunctionCode = source.FunctionCode;
-                                    existing.UpdateDate = DateTime.Now;
+                                    existing.UpdateDate = DateTime.UtcNow;
                                     _db.GroupPermissions.Update(existing);
                                 }
                             }

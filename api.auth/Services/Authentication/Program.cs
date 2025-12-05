@@ -22,7 +22,7 @@ StartupService.InitialService(builder.Services);
 builder.Services.AddMemoryCache();
 SetupHttpClient.InitialService(builder);
 
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 /* --- Set Database ---*/
 var connectionString =
     builder.Configuration.GetConnectionString("DBConnection");

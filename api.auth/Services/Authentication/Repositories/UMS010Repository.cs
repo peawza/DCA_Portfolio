@@ -249,8 +249,8 @@ namespace Authentication.Repositories
                             GroupId = insertedGroupId,
                             ScreenId = screenId,
                             FunctionCode = 63,
-                            CreateDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
+                            CreateDate = DateTime.UtcNow,
+                            UpdateDate = DateTime.UtcNow,
                             CreateBy = "SYSTEM"
                         };
                         _db.GroupPermissions.Add(newPermission);
@@ -275,11 +275,59 @@ namespace Authentication.Repositories
 
                 if (!result.Succeeded)
                 {
-                    var errorMessage = string.Join(" | ", result.Errors.Select(e => $"{e.Code}: {e.Description}"));
+                    var errors = result.Errors.ToList();
 
+                    // เช็คชื่อผู้ใช้งานซ้ำ
+                    var duplicateUserNameError = errors
+                        .FirstOrDefault(e =>
+                            string.Equals(e.Code, "DuplicateUserName", StringComparison.OrdinalIgnoreCase));
+
+                    // เช็คอีเมลซ้ำ
+                    var duplicateEmailError = errors
+                        .FirstOrDefault(e =>
+                            string.Equals(e.Code, "DuplicateEmail", StringComparison.OrdinalIgnoreCase));
+
+                    // ถ้าซ้ำทั้งคู่
+                    if (duplicateUserNameError != null && duplicateEmailError != null)
+                    {
+                        return new UMS010_CreateUser_Result
+                        {
+                            StatusCode = "400",
+                            StatusName = "ไม่สำเร็จ",
+                            MessageCode = "UMS010_USERNAME_EMAIL_DUPLICATE",
+                            MessageName = "ชื่อผู้ใช้งานและอีเมลนี้ถูกใช้ลงทะเบียนแล้ว กรุณาเปลี่ยนทั้งชื่อผู้ใช้งานและอีเมล"
+                        };
+                    }
+
+                    // ชื่อผู้ใช้งานซ้ำอย่างเดียว
+                    if (duplicateUserNameError != null)
+                    {
+                        return new UMS010_CreateUser_Result
+                        {
+                            StatusCode = "400",
+                            StatusName = "ไม่สำเร็จ",
+                            MessageCode = "UMS010_USERNAME_DUPLICATE",
+                            MessageName = "ชื่อผู้ใช้งานนี้ถูกใช้ลงทะเบียนแล้ว กรุณาใช้ชื่อผู้ใช้งานอื่น"
+                        };
+                    }
+
+                    // อีเมลซ้ำอย่างเดียว
+                    if (duplicateEmailError != null)
+                    {
+                        return new UMS010_CreateUser_Result
+                        {
+                            StatusCode = "400",
+                            StatusName = "ไม่สำเร็จ",
+                            MessageCode = "UMS010_EMAIL_DUPLICATE",
+                            MessageName = "อีเมลนี้ถูกใช้ลงทะเบียนแล้ว กรุณาใช้อีเมลอื่น"
+                        };
+                    }
+
+                    // เคสอื่น ๆ รวม error message เดิม
+                    var errorMessage = string.Join("; ", errors.Select(e => e.Description));
                     return new UMS010_CreateUser_Result
                     {
-                        StatusCode = "ERROR",
+                        StatusCode = "400",
                         StatusName = "ไม่สำเร็จ",
                         MessageCode = "UMS010_CREATE_FAILED",
                         MessageName = errorMessage
@@ -299,7 +347,7 @@ namespace Authentication.Repositories
                     PositionCode = criteria.PositionCode,
                     Remark = criteria.Remark,
                     LanguageCode = criteria.LanguageCode,
-                    CreateDate = DateTime.Now,
+                    CreateDate = DateTime.UtcNow,
                     CreatedBy = criteria.CreateBy,
                 };
 
@@ -333,7 +381,7 @@ namespace Authentication.Repositories
 
                 return new UMS010_CreateUser_Result
                 {
-                    StatusCode = "ERROR",
+                    StatusCode = "400",
                     StatusName = "ผิดพลาด",
                     MessageCode = "UMS010_CREATE_EXCEPTION",
                     MessageName = ex.Message
@@ -388,7 +436,7 @@ namespace Authentication.Repositories
                 userInfo.PositionCode = criteria.PositionCode;
                 userInfo.Remark = criteria.Remark;
                 //userInfo.LanguageCode = criteria.LanguageCode;
-                userInfo.UpdateDate = DateTime.Now;
+                userInfo.UpdateDate = DateTime.UtcNow;
                 userInfo.UpdatedBy = criteria.UpdateBy;
 
                 await _db.SaveChangesAsync();
@@ -438,7 +486,7 @@ namespace Authentication.Repositories
 
             user.DeletedFlag = true;
             user.DeletedBy = criteria.DeletedBy ?? "system";
-            user.DeletedDate = DateTime.Now;
+            user.DeletedDate = DateTime.UtcNow;
 
 
 
@@ -480,7 +528,7 @@ namespace Authentication.Repositories
             }
 
 
-            user.LastUpdatePasswordDate = DateTime.Now;
+            user.LastUpdatePasswordDate = DateTime.UtcNow;
             user.FirstLoginFlag = false;
             await _userManager.UpdateAsync(user);
 
@@ -536,7 +584,7 @@ namespace Authentication.Repositories
             }
 
 
-            user.LastUpdatePasswordDate = DateTime.Now;
+            user.LastUpdatePasswordDate = DateTime.UtcNow;
             user.FirstLoginFlag = false;
             await _userManager.UpdateAsync(user);
 
@@ -654,7 +702,7 @@ namespace Authentication.Repositories
 
 
             user.FirstLoginFlag = false;
-            user.LastUpdatePasswordDate = DateTime.Now;
+            user.LastUpdatePasswordDate = DateTime.UtcNow;
 
 
             await _userManager.UpdateSecurityStampAsync(user);
@@ -774,8 +822,8 @@ namespace Authentication.Repositories
                             GroupId = insertedGroupId,
                             ScreenId = screenId,
                             FunctionCode = 63,
-                            CreateDate = DateTime.Now,
-                            UpdateDate = DateTime.Now,
+                            CreateDate = DateTime.UtcNow,
+                            UpdateDate = DateTime.UtcNow,
                             CreateBy = "SYSTEM"
                         };
                         _db.GroupPermissions.Add(newPermission);
@@ -802,7 +850,56 @@ namespace Authentication.Repositories
                 var result = await _userManager.CreateAsync(appUser, criteria.Password);
                 if (!result.Succeeded)
                 {
-                    var errorMessage = string.Join("; ", result.Errors.Select(e => e.Description));
+                    var errors = result.Errors.ToList();
+
+                    // เช็คชื่อผู้ใช้งานซ้ำ
+                    var duplicateUserNameError = errors
+                        .FirstOrDefault(e =>
+                            string.Equals(e.Code, "DuplicateUserName", StringComparison.OrdinalIgnoreCase));
+
+                    // เช็คอีเมลซ้ำ
+                    var duplicateEmailError = errors
+                        .FirstOrDefault(e =>
+                            string.Equals(e.Code, "DuplicateEmail", StringComparison.OrdinalIgnoreCase));
+
+                    // ถ้าซ้ำทั้งคู่
+                    if (duplicateUserNameError != null && duplicateEmailError != null)
+                    {
+                        return new UMS010_CreateUser_Result
+                        {
+                            StatusCode = "400",
+                            StatusName = "ไม่สำเร็จ",
+                            MessageCode = "UMS010_USERNAME_EMAIL_DUPLICATE",
+                            MessageName = "ชื่อผู้ใช้งานและอีเมลนี้ถูกใช้ลงทะเบียนแล้ว กรุณาเปลี่ยนทั้งชื่อผู้ใช้งานและอีเมล"
+                        };
+                    }
+
+                    // ชื่อผู้ใช้งานซ้ำอย่างเดียว
+                    if (duplicateUserNameError != null)
+                    {
+                        return new UMS010_CreateUser_Result
+                        {
+                            StatusCode = "400",
+                            StatusName = "ไม่สำเร็จ",
+                            MessageCode = "UMS010_USERNAME_DUPLICATE",
+                            MessageName = "ชื่อผู้ใช้งานนี้ถูกใช้ลงทะเบียนแล้ว กรุณาใช้ชื่อผู้ใช้งานอื่น"
+                        };
+                    }
+
+                    // อีเมลซ้ำอย่างเดียว
+                    if (duplicateEmailError != null)
+                    {
+                        return new UMS010_CreateUser_Result
+                        {
+                            StatusCode = "400",
+                            StatusName = "ไม่สำเร็จ",
+                            MessageCode = "UMS010_EMAIL_DUPLICATE",
+                            MessageName = "อีเมลนี้ถูกใช้ลงทะเบียนแล้ว กรุณาใช้อีเมลอื่น"
+                        };
+                    }
+
+                    // เคสอื่น ๆ รวม error message เดิม
+                    var errorMessage = string.Join("; ", errors.Select(e => e.Description));
                     return new UMS010_CreateUser_Result
                     {
                         StatusCode = "ERROR",
@@ -825,8 +922,8 @@ namespace Authentication.Repositories
                     PositionCode = criteria.PositionCode,
                     Remark = criteria.Remark,
                     LanguageCode = criteria.LanguageCode,
-                    CreateDate = DateTime.Now,
-                    UpdateDate = DateTime.Now,
+                    CreateDate = DateTime.UtcNow,
+                    UpdateDate = DateTime.UtcNow,
                     CreatedBy = criteria.CreateBy,
                     UpdatedBy = criteria.CreateBy
                 };

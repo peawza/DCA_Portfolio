@@ -279,7 +279,7 @@ namespace Authentication.Controllers
                     RefreshToken = rtoken,
                     Permission = null,
                     Device = oUser.Device,
-                    LoginTime = DateTime.Now,
+                    LoginTime = DateTime.UtcNow,
                     IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
 
                 };
@@ -456,7 +456,7 @@ namespace Authentication.Controllers
                 RefreshToken = rtoken,
                 Permission = null,
                 Device = request.Device,
-                LoginTime = DateTime.Now,
+                LoginTime = DateTime.UtcNow,
                 IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
             };
 
@@ -559,7 +559,7 @@ namespace Authentication.Controllers
                 jwtInfo.Token = token;
                 jwtInfo.RefreshToken = rtoken;
                 jwtInfo.Device = device;
-                jwtInfo.LoginTime = DateTime.Now;
+                jwtInfo.LoginTime = DateTime.UtcNow;
                 jwtInfo.Permission = existingJwtInfo.Permission;
                 jwtInfo.IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
                 jwtInfo.ConnectionStringDB = existingJwtInfo.ConnectionStringDB;
