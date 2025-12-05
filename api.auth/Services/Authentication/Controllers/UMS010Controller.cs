@@ -71,7 +71,7 @@ namespace Authentication.Controllers
 
             try
             {
-                //criteria.Password = "P@ssw0rd";
+
                 criteria.CreateBy = User.Identity.Name;
                 var result = await _UMS010_service.CreateUser(criteria);
                 return Ok(result);
