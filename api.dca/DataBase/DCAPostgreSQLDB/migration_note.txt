@@ -1,0 +1,20 @@
+
+
+-- Scaffold-DbContext
+
+
+dotnet ef dbcontext scaffold "Host=192.168.10.101;Port=5432;Database=DCA_Portfolio;Username=postgres;Password=P@ssw0rd" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models\Tables --context DcaDbContext --context-dir . --force --no-onconfiguring
+
+--- Add migration ---
+D:\git\DCA_Portfolio\api.dca\DataBase\DCAPostgreSQLDB\migration_note.txt
+--- dotnet ef migrations add "Initial" --context "DcaDbContext" --output-dir "Migrations\ProductionOperation " -p "Database\DCAPostgreSQLDB\DCAPostgreSQLDB.csproj" -s "DCAPostgreSQLDB.csproj"
+dotnet ef migrations add "Initial" --context "DcaDbContext" --output-dir "Models" -p "DataBase/DCAPostgreSQLDB/DCAPostgreSQLDB.csproj" -s "DCAPostgreSQLDB.csproj"
+
+
+--- Update database --- 
+dotnet ef database update --context "DcaDbContext" -p "Database\DCAPostgreSQLDB\DCAPostgreSQLDB.csproj" -s "DCAPostgreSQLDB.csproj"
+
+
+--- Remove migration ---
+dotnet ef migrations remove --context "DcaDbContext" -p "Database\DCAPostgreSQLDB\DCAPostgreSQLDB.csproj" -s "DCAPostgreSQLDB.csproj" -f
+ 
